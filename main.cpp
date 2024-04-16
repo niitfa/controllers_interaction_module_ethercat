@@ -32,6 +32,7 @@ int pCharToInt(char* value)
 
 int main(int argc,char** argv)
 {
+	int chanched;
 
 	/*EthercatThreadManager* ethercat_thread_0 = new EthercatThreadManager();
 	TorusModel* torus_0 = new TorusModel();
