@@ -11,10 +11,9 @@ set(source_ext .cpp)
 # Targets
 set(exec_target run)
 set(lib_target ethercatcim)
-set(lib_wrapper_target wrapper)
 
 # IGH Ethercat libraries path
-set(igh_lib_path "/home/niitfa/ethercat-hg/lib")
+set(igh_lib_path "/home/niitfa/Artamonov/ethercat-hg/lib")
 set(igh_objects 
     ${igh_lib_path}/libethercat_la-common.o
     ${igh_lib_path}/libethercat_la-domain.o

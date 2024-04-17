@@ -16,8 +16,9 @@
 #include "gantry_enable_task.h"
 
 #include "ethercat_thread_configurator.h"
-
 #include "external_emulation_manager.h"
+
+#include "unspecified_device.h"
 
 int pCharToInt(char* value)
 {
