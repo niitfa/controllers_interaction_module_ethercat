@@ -2,6 +2,7 @@
 #define SUBSYSTEM_CONTENT_CREATOR_H
 
 #include "external_emulation_manager.h"
+#include "subsystem.h"
 
 template<class TContext, class TState, class TSubsystem, class TTelemetry>
 class SubsystemContentCreator : public Subsystem

@@ -2,7 +2,6 @@
 #define STOPWATCH_H
 
 #include <iostream>
-//#include <chrono>
 #include <time.h>
 
 class Stopwatch

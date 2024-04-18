@@ -11,6 +11,7 @@
 #include "lonely_drive_enable_task.h"
 #include "lonely_drive_move_task.h"
 #include "lonely_drive.h"
+#include "lonely_drive_test_emulation.h"
 
 #include "gantry.h"
 #include "gantry_enable_task.h"
@@ -18,7 +19,9 @@
 #include "ethercat_thread_configurator.h"
 #include "external_emulation_manager.h"
 
+
 #include "unspecified_device.h"
+#include "real_lonely_drive.h"
 
 int pCharToInt(char* value)
 {
@@ -33,8 +36,6 @@ int pCharToInt(char* value)
 
 int main(int argc,char** argv)
 {
-	int chanched;
-
 	/*EthercatThreadManager* ethercat_thread_0 = new EthercatThreadManager();
 	TorusModel* torus_0 = new TorusModel();
 
@@ -78,7 +79,7 @@ int main(int argc,char** argv)
 
 	while(1)
 	{
-		TestEmulation* emul = new TestEmulation();
+		LonelyDriveTestEmulation* emul = new LonelyDriveTestEmulation();
 		mech_subsystem_1->InsertEmulationEvent(emul);
 		std::this_thread::sleep_for(sleep_time);
 		//mech_subsystem_1->ClearAllEmulationEvents();	
