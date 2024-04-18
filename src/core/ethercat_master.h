@@ -12,7 +12,6 @@ public:
 	EthercatMaster();
 	~EthercatMaster();
 	void SetMasterIndex(int);	
-	void Action();
 	void Request();
 	ec_master_t* GetRequest();
 	void Activate();

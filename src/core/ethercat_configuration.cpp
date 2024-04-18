@@ -121,8 +121,8 @@ void EthercatConfiguration::PreProcessingAction()
 
 		domain->Process();
 		slaves->ReadProcessDataFromDomain();
+		
 		/* Optional */
-		master->Action();
 		mailbox->Action();
 		telemetry_broker->UpdateEthercatBufferTelemetry();
 	}

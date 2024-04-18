@@ -2,7 +2,7 @@
 #define SYNCINFO_H
 
 #include "ecrt.h"
-#include "coe_object.h"
+#include "coe_process_object.h"
 #include <map>
 #include <vector>
 

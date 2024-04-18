@@ -1,7 +1,7 @@
 #ifndef SDOLIST_H
 #define SDOLIST_H
 
-#include "coe_object.h"
+#include "coe_service_object.h"
 #include "ecrt.h"
 #include <map>
 

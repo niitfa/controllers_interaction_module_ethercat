@@ -3,19 +3,10 @@
 
 EthercatMaster::EthercatMaster()
 {
-	//context = new EthercatMasterContext();
 }
 
 EthercatMaster::~EthercatMaster()
 {
-	//delete context;
-}
-
-void EthercatMaster::Action()
-{
-	//this->context->ContextRun();
-	//this->ModifyTelemetry();
-	//this->context->GetTelemetryExchanger()->UpdateBufferTelemetry();
 }
 
 void EthercatMaster::Request()

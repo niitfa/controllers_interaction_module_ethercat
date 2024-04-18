@@ -1,12 +1,8 @@
-#include "coe_object.h"
 #include <iostream>
-
 #include <bitset>
 #include "word_bit.h"
-		//std::bitset<64> y(it->second->LoadValue());
-		//std::cout << it->second->GetName() << " read: " << y << std::endl;
+#include "coe_object.h"
 
-/* CoEObject */
 CoEObject::CoEObject(std::string nm, uint16_t ind, uint8_t si, uint16_t sz) : 
 	name{nm},
 	index{ind},
@@ -29,8 +25,6 @@ void CoEObject::ReadValueFromFrame()
 		this->bit_position, 
 		this->GetSizeBit()
 		);
-
-	//std::cout <<  byte_position/**(uint64_t *)(domain_offset + byte_position) */<< std::endl;
 }
 void CoEObject::WriteValueToFrame() 
 {
@@ -79,91 +73,3 @@ void CoEObject::ec_write_le(uint8_t* pBitsArray, uint16_t bytePos, uint8_t bitPo
 	*pBitsPayload &= mask64;
 	*pBitsPayload |= ((data & mask32) << bitPos);
 }
-
-/* CoEProcessObject */
-CoEProcessObject::CoEProcessObject(std::string name, uint16_t index, uint8_t subindex, uint16_t size)
-	: CoEObject{name, index, subindex, size}
-{}
-
-/* CoEServiceObject */
-CoEServiceObject::CoEServiceObject(std::string name, uint16_t index, uint8_t subindex, uint16_t size)
-	: CoEObject(name, index, subindex, size)
-{
-	 sdo_request = nullptr;
-}	
-
-void CoEServiceObject::CreateSDORequest(ec_slave_config_t* slave_config, uint32_t timeout_ms = DEFAULT_TIMEOUT_MS)
-{
-	uint16_t bits_per_byte 		= 8;
-	uint16_t min_sdo_size_bytes = 1;
-	uint16_t sdo_size_bytes = this->GetSizeBit() / bits_per_byte;
-
-	this->sdo_request = ecrt_slave_config_create_sdo_request(
-		slave_config, 
-		this->GetIndex(), 
-		this->GetSubindex(), 
-		std::max(sdo_size_bytes, min_sdo_size_bytes)
-		);
-
-	if(!sdo_request)
-	{
-		// error log
-		// logger->Add("Error creating sdo request");
-		//std::cout << "ERROR SDO CREATE\n";
-	}
-
-	ecrt_sdo_request_timeout(sdo_request, timeout_ms);
-	this->sdo_offset = ecrt_sdo_request_data(sdo_request);
-
-	/* debug */
-	//std::cout << "SDO create: " << std::hex << GetIndex()<< " " << GetSubindex() << " " << GetName() << std::dec << "\n";
-}
-
-int CoEServiceObject::WriteTypeRequest()
-{
-	int request_is_successful = (ecrt_sdo_request_state(sdo_request) == EC_REQUEST_SUCCESS);
-	ecrt_sdo_request_write(sdo_request);
-
-	CoEObject::ec_write_le(
-		this->sdo_offset, 
-		0, 
-		0, 
-		this->LoadValue(),
-		this->GetSizeBit()
-		);
-	return request_is_successful;
-}
-
-int CoEServiceObject::ReadTypeRequest()
-{
-	int request_is_successful = (ecrt_sdo_request_state(sdo_request) == EC_REQUEST_SUCCESS);
-	ecrt_sdo_request_read(sdo_request);
-	int64_t val = CoEObject::ec_read_le(
-		this->sdo_offset, 
-		0, 
-		0, 
-		this->GetSizeBit()
-		);
-	CoEObject::StoreValue(val);
-
-	/*if (ecrt_sdo_request_state(sdo_request) == EC_REQUEST_SUCCESS)
-	{
-		std::cerr << "SDO SUCCESS\n";
-	}
-	if(ecrt_sdo_request_state(sdo_request) == EC_REQUEST_BUSY)
-	{
-		std::cerr << "SDO BUSY\n";
-	}
-	if(ecrt_sdo_request_state(sdo_request) == EC_REQUEST_UNUSED)
-	{
-		std::cerr << "SDO UNUSED\n";
-	}
-	if(ecrt_sdo_request_state(sdo_request) == EC_REQUEST_ERROR)
-	{
-		std::cerr << "SDO ERROR\n";
-	} */
-
-	return request_is_successful;	
-}
-
-ec_sdo_request_t* CoEServiceObject::GetSDORequest() { return this->sdo_request; }
