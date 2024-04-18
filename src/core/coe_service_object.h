@@ -15,7 +15,6 @@ public:
 	int WriteTypeRequest();
 	int ReadTypeRequest();
 	ec_sdo_request_t* GetSDORequest();
-	void CreateSDORequest(ec_sdo_request_t*);
 };
 
 #endif
