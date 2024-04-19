@@ -10,7 +10,9 @@
 
 #include "lonely_drive_enable_task.h"
 #include "lonely_drive_move_task.h"
-#include "lonely_drive.h"
+//#include "lonely_drive.h"
+#include "real_lonely_drive.h"
+#include "emulated_lonely_drive.h"
 #include "lonely_drive_test_emulation.h"
 
 #include "gantry.h"
@@ -59,7 +61,7 @@ int main(int argc,char** argv)
 	// PREV
 	EthercatThreadManager* ethercat_thread_0 = new EthercatThreadManager();
 	UnspecifiedDevice* device_0 = new UnspecifiedDevice();
-	LonelyDrive* mech_subsystem_0 = new RealLonelyDrive();
+	LonelyDrive* mech_subsystem_0 = new EmulatedLonelyDrive();
 	ConfigureNetwork_0(ethercat_thread_0, device_0, mech_subsystem_0);
 
 	EthercatThreadManager* ethercat_thread_1 = new EthercatThreadManager();
@@ -77,25 +79,17 @@ int main(int argc,char** argv)
 
 	//TestEmulation* emul = new TestEmulation();
 
-	while(1)
+	/*while(1)
 	{
 		LonelyDriveTestEmulation* emul = new LonelyDriveTestEmulation();
 		mech_subsystem_1->InsertEmulationEvent(emul);
 		std::this_thread::sleep_for(sleep_time);
-		//mech_subsystem_1->ClearAllEmulationEvents();	
-		//mech_subsystem_1->RemoveEmulationEvent(emul);
-	}
+	} */
 
-	/*mech_subsystem_1->GetEmulationManager()->InsertEvent(emul);
-	std::this_thread::sleep_for(sleep_time);
-	mech_subsystem_1->GetEmulationManager()->RemoveEvent(emul);
-	std::this_thread::sleep_for(sleep_time);
-	mech_subsystem_1->GetEmulationManager()->InsertEvent(emul);
-	std::this_thread::sleep_for(sleep_time);
-	mech_subsystem_1->GetEmulationManager()->RemoveEvent(emul); */
+
 
 	/* Task from command line */
-	/*while(true)
+	while(true)
 	{
 		int32_t pos_0, pos_1;
 		std::cout << "Enter drive 0 (HIWIN) position:\n> ";
@@ -117,7 +111,7 @@ int main(int argc,char** argv)
 		LonelyDriveTaskState::StartQueueWith(enable_drive_1)
 			->WithNextTask(move_drive_1);
 		mech_subsystem_1->SetTask(enable_drive_1);	
-	} */
+	}
 
 	
 	std::chrono::milliseconds sleep_time_2(100);

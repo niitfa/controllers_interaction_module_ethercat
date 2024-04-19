@@ -11,4 +11,17 @@ public:
 	/* Общий интерфейс */
 };
 
+class EmulatedGantryEnableTask : public GantryEnableTask
+{
+public:
+	void StateRun() override;
+};
+
+class RealGantryEnableTask : public GantryEnableTask
+{
+public:
+	void StateRun() override;
+};
+
+
 #endif

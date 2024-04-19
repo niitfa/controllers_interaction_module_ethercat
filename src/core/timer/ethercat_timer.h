@@ -8,7 +8,7 @@
 
 class EthercatTimer
 {
-	static const int MICROSECS_PER_SEC = 1e+6;
+	static const int kMicrosecsPerSec = 1e+6;
 	uint32_t frequency;
 	uint32_t period_us;
 
@@ -26,15 +26,5 @@ public:
 	uint32_t GetFrequency();
 	uint32_t GetPeriodMicroseconds();
 };
-
-class SimpleTimer : public EthercatTimer
-{
-public:
-	void Sleep() override;
-	void ConfigureClocks() override;
-	void SyncDistributedClocks(EthercatMaster* master) override;
-	void UpdateMasterClock() override;	
-};
-
 
 #endif

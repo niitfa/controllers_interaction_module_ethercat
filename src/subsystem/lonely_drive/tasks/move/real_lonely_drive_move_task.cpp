@@ -1,4 +1,4 @@
-#include "real_lonely_drive_move_task.h"
+#include "lonely_drive_move_task.h"
 #include "coe_drive_state_handler.h"
 #include "word_bit.h"
 #include "coe_object_names.h"
@@ -12,7 +12,7 @@ void RealLonelyDriveMoveTask::StateRun()
 	int64_t controlword = drive->GetRxPDOEntry(kControlword)->LoadValue();
 	int64_t actual_position_count = drive->GetTxPDOEntry(kActualPosition)->LoadValue();
 	int64_t mode_of_operation_out = drive->GetTxPDOEntry(kModeOfOperationOut)->LoadValue();
-	
+
 	switch(this->task_state)
 	{
 		case 0:

@@ -8,4 +8,16 @@ class LonelyDriveEnableTask : public LonelyDriveTaskState,
 {
 };
 
+class EmulatedLonelyDriveEnableTask : public LonelyDriveEnableTask
+{
+public:
+	void StateRun() override;
+};
+
+class RealLonelyDriveEnableTask : public LonelyDriveEnableTask
+{
+public:
+	void StateRun() override;
+};
+
 #endif

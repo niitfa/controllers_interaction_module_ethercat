@@ -14,4 +14,16 @@ protected:
 	int task_state;
 };
 
+class EmulatedLonelyDriveMoveTask : public LonelyDriveMoveTask
+{
+public:
+	void StateRun() override;
+};
+
+class RealLonelyDriveMoveTask : public LonelyDriveMoveTask
+{
+public:
+	void StateRun() override;
+};
+
 #endif

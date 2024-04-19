@@ -5,8 +5,8 @@
 
 class DCMasterToReferenceTimer : public EthercatTimer
 {
-	static const uint32_t NANOSECS_PER_MICROSEC = 1e+3;
-	static const uint32_t NANOSECS_PER_SEC = 1e+9;
+	static const uint32_t kNanosecsPerMicrosec = 1e+3;
+	static const uint32_t kNanosecsPerSec = 1e+9;
 	static const uint32_t DC_FILTER_CNT = 1024;
 
 	EthercatSlave* reference_slave = nullptr;
@@ -44,7 +44,6 @@ public:
 	void SetSlavesClocks(EthercatSlavesContainer*);
 	void SetShiftMicroseconds(uint32_t);
 	uint32_t GetShiftMicroseconds();
-
 };
 
 

@@ -24,7 +24,7 @@ DCMasterToReferenceTimer::DCMasterToReferenceTimer() :
 void DCMasterToReferenceTimer::Sleep()
 {
 	bool wake_up_flag = false;
-	uint64_t period_nanoseconds = EthercatTimer::GetPeriodMicroseconds()*NANOSECS_PER_MICROSEC;
+	uint64_t period_nanoseconds = EthercatTimer::GetPeriodMicroseconds()*kNanosecsPerMicrosec;
 
 	while(!wake_up_flag)
 	{
@@ -54,8 +54,8 @@ void DCMasterToReferenceTimer::ConfigureClocks()
 		ecrt_slave_config_dc(
 			it->second->GetConfig(),
 			it->second->GetAssignActivate(),
-			this->EthercatTimer::GetPeriodMicroseconds() * NANOSECS_PER_MICROSEC, 
-			this->GetShiftMicroseconds() * NANOSECS_PER_MICROSEC,
+			this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
+			this->GetShiftMicroseconds() * kNanosecsPerMicrosec,
 			0, 
 			0);
 	}
@@ -92,7 +92,7 @@ void DCMasterToReferenceTimer::SyncDistributedClocks(EthercatMaster* master)
 void DCMasterToReferenceTimer::UpdateMasterClock()
 {
 	//printf("system_time_base: %i\n", system_time_base);
-	uint64_t period_nanoseconds = EthercatTimer::GetPeriodMicroseconds()*NANOSECS_PER_MICROSEC;
+	uint64_t period_nanoseconds = EthercatTimer::GetPeriodMicroseconds()*kNanosecsPerMicrosec;
     int32_t delta = dc_diff_ns - prev_dc_diff_ns;
     prev_dc_diff_ns = dc_diff_ns;
 
@@ -154,17 +154,17 @@ int64_t DCMasterToReferenceTimer::SystemTimeNanoseconds()
 
 int64_t DCMasterToReferenceTimer::TimespecToNanoseconds(timespec* ts)
 {
-	return (uint64_t) ts->tv_sec * NANOSECS_PER_SEC + ts->tv_nsec;
+	return (uint64_t) ts->tv_sec * kNanosecsPerSec + ts->tv_nsec;
 }
 
 void DCMasterToReferenceTimer::AddNanosecondsToTimespec(uint64_t ns, timespec* ts)
 {
-	ts->tv_sec += ns / NANOSECS_PER_SEC; // ts.tv_sec = ts.tv_sec + nanosecs / NSECS_IN_SEC
-    ns = ns % NANOSECS_PER_SEC;
+	ts->tv_sec += ns / kNanosecsPerSec; // ts.tv_sec = ts.tv_sec + nanosecs / NSECS_IN_SEC
+    ns = ns % kNanosecsPerSec;
     
-    if(ts->tv_nsec + ns > NANOSECS_PER_SEC) {
+    if(ts->tv_nsec + ns > kNanosecsPerSec) {
         ts->tv_sec += 1;
-        ts->tv_nsec += (ns - NANOSECS_PER_SEC);
+        ts->tv_nsec += (ns - kNanosecsPerSec);
     }
     else
     {
