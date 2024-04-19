@@ -1,5 +1,5 @@
-#ifndef SUBSYSTEMSTATESELECTOR_H
-#define SUBSYSTEMSTATESELECTOR_H
+#ifndef SUBSYSTEM_STATE_SELECTOR_H
+#define SUBSYSTEM_STATE_SELECTOR_H
 
 template<class TSubsystem, class TBasicState, class TRealState, class TEmulatedState>
 class SubsystemStateSelector

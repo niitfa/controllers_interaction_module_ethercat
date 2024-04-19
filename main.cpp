@@ -16,7 +16,7 @@
 #include "gantry.h"
 #include "gantry_enable_task.h"
 
-#include "ethercat_thread_configurator.h"
+#include "ethercat_thread_factory.h"
 #include "external_emulation_manager.h"
 
 

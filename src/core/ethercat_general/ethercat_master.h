@@ -1,5 +1,5 @@
-#ifndef ETHERCATMASTER_H
-#define ETHERCATMASTER_H
+#ifndef ETHERCAT_MASTER_H
+#define ETHERCAT_MASTER_H
 
 #include "ecrt.h"
 #include "mailbox_manager.h"

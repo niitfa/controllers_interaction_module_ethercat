@@ -1,5 +1,5 @@
-#ifndef STATE_H
-#define STATE_H
+#ifndef STATE_CONTENT_CREATOR_H
+#define STATE_CONTENT_CREATOR_H
 
 #include "mutual_access_synchronizer.h"
 #include "telemetry_exchanger.h"

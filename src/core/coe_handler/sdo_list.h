@@ -1,5 +1,5 @@
-#ifndef SDOLIST_H
-#define SDOLIST_H
+#ifndef SDO_LIST_H
+#define SDO_LIST_H
 
 #include "coe_service_object.h"
 #include "ecrt.h"

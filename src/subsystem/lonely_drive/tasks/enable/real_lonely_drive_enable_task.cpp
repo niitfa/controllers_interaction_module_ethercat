@@ -1,13 +1,15 @@
 #include "real_lonely_drive_enable_task.h"
 #include "coe_drive_state_handler.h"
+#include "coe_object_names.h"
 
 using namespace coe_drive_state_handler;
+using namespace coe_object_names;
 
 void RealLonelyDriveEnableTask::StateRun()
 {
 	auto drive = GetContext()->GetSubsystem()->GetDrive();
-	int64_t statusword = drive->GetTxPDOEntry("Statusword")->LoadValue();
-	int64_t controlword = drive->GetRxPDOEntry("Controlword")->LoadValue();
+	int64_t statusword = drive->GetTxPDOEntry(kStatusword)->LoadValue();
+	int64_t controlword = drive->GetRxPDOEntry(kControlword)->LoadValue();
 
 	PowerDriveSystemState psd_state = GetPDSStateFromStatusword(&statusword);
 	switch(psd_state)
@@ -29,7 +31,7 @@ void RealLonelyDriveEnableTask::StateRun()
 		break;	
 	}
 
-	drive->GetRxPDOEntry("Controlword")->StoreValue(controlword);
+	drive->GetRxPDOEntry(kControlword)->StoreValue(controlword);
 
 	if(psd_state == kStateOperationEnabled)
 	{

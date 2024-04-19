@@ -1,5 +1,5 @@
-#ifndef ETHERCATSLAVESCONTAINER_H
-#define ETHERCATSLAVESCONTAINER_H
+#ifndef ETHERCAT_SLAVES_CONTAINER_H
+#define ETHERCAT_SLAVES_CONTAINER_H
 
 #include "ethercat_slave.h"
 #include "ethercat_master.h"

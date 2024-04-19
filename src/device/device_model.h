@@ -1,5 +1,5 @@
-#ifndef DEVICEMODEL_H
-#define DEVICEMODEL_H
+#ifndef DEVICE_MODEL_H
+#define DEVICE_MODEL_H
 
 #include <iostream>
 #include <vector>

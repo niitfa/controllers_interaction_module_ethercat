@@ -1,5 +1,5 @@
-#ifndef TELEMETRYEXCHANGER_H
-#define TELEMETRYEXCHANGER_H
+#ifndef TELEMETRY_EXCHANGER_H
+#define TELEMETRY_EXCHANGER_H
 
 #include "mutual_access_synchronizer.h"
 

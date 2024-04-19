@@ -1,5 +1,5 @@
-#ifndef ETHERCATSLAVE_H
-#define ETHERCATSLAVE_H
+#ifndef ETHERCAT_SLAVE_H
+#define ETHERCAT_SLAVE_H
 
 #include <map>
 #include <string>

@@ -1,21 +1,23 @@
 #include "real_lonely_drive_move_task.h"
 #include "coe_drive_state_handler.h"
 #include "word_bit.h"
+#include "coe_object_names.h"
 
 using namespace coe_drive_state_handler;
+using namespace coe_object_names;
 
 void RealLonelyDriveMoveTask::StateRun()
 {
 	auto drive = GetContext()->GetSubsystem()->GetDrive();
-	int64_t controlword = drive->GetRxPDOEntry("Controlword")->LoadValue();
-	int64_t actual_position_count = drive->GetTxPDOEntry("Actual position")->LoadValue();
-	int64_t mode_of_operation_out = drive->GetTxPDOEntry("Mode of operation out")->LoadValue();
+	int64_t controlword = drive->GetRxPDOEntry(kControlword)->LoadValue();
+	int64_t actual_position_count = drive->GetTxPDOEntry(kActualPosition)->LoadValue();
+	int64_t mode_of_operation_out = drive->GetTxPDOEntry(kModeOfOperationOut)->LoadValue();
 	
 	switch(this->task_state)
 	{
 		case 0:
-		drive->GetRxPDOEntry("Mode of operation")->StoreValue(kModeProfilePosition);
-		drive->GetRxPDOEntry("Target position")->StoreValue(this->target_position_count);
+		drive->GetRxPDOEntry(kModeOfOperation)->StoreValue(kModeProfilePosition);
+		drive->GetRxPDOEntry(kTargetPosition)->StoreValue(this->target_position_count);
 		WordBit::Write(&controlword, 8, 0);
 		WordBit::Write(&controlword, 6, 0);		
 		WordBit::Write(&controlword, 5, 1);	
@@ -36,5 +38,5 @@ void RealLonelyDriveMoveTask::StateRun()
 		WordBit::Write(&controlword, 4, 0);
 		LonelyDriveTaskState::GetContext()->TransitToNext();
 	}
-	drive->GetRxPDOEntry("Controlword")->StoreValue(controlword);
+	drive->GetRxPDOEntry(kControlword)->StoreValue(controlword);
 }

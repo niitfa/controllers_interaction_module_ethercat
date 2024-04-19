@@ -1,5 +1,5 @@
-#ifndef ETHERCATCONFIGURATION_H
-#define ETHERCATCONFIGURATION_H
+#ifndef ETHERCAT_CONFIGURATION_H
+#define ETHERCAT_CONFIGURATION_H
 
 #include <vector>
 #include <map>

@@ -1,5 +1,5 @@
-#ifndef ETHERCATDOMAIN_H
-#define ETHERCATDOMAIN_H
+#ifndef ETHERCAT_DOMAIN_H
+#define ETHERCAT_DOMAIN_H
 
 #include "ethercat_master.h"
 #include "ethercat_slaves_container.h"

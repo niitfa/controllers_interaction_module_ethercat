@@ -1,5 +1,5 @@
-#ifndef ETHERCATTHREADMANAGER_H
-#define ETHERCATTHREADMANAGER_H
+#ifndef ETHERCAT_THREAD_MANAGER_H
+#define ETHERCAT_THREAD_MANAGER_H
 
 #include <thread>
 #include <atomic>

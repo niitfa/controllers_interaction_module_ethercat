@@ -1,0 +1,18 @@
+#include "simple_timer.h"
+
+void SimpleTimer::Sleep()
+{
+	std::chrono::microseconds us(
+		EthercatTimer::GetPeriodMicroseconds()
+		);
+	std::this_thread::sleep_for(us);
+}
+
+void SimpleTimer::ConfigureClocks()
+{}
+
+void SimpleTimer::SyncDistributedClocks(EthercatMaster* master)
+{}
+
+void SimpleTimer::UpdateMasterClock()
+{}
