@@ -51,24 +51,3 @@ void EthercatMaster::SendProcessData()
 {
 	ecrt_master_send(this->master_request);	
 }
-
-/*const EthercatMasterTelemetry* EthercatMaster::GetTelemetry()
-{
-	return this->context->GetTelemetryExchanger()->GetClientTelemetry();
-}
-
-void EthercatMaster::UpdateTelemetry()
-{
-	this->context->GetTelemetryExchanger()->UpdateClientTelemetry();
-}
-
-void EthercatMaster::ModifyTelemetry()
-{
-	auto telemetry = context->GetTelemetryExchanger()->GetMasterTelemetry();
-	ec_master_state_t* ms;
-	ecrt_master_state(this->master_request, ms);
-
-	telemetry->slaves_responding = ms->slaves_responding;
-	telemetry->al_states = ms->al_states;
-	telemetry->link_up = ms->link_up;
-} */

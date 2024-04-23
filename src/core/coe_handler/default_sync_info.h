@@ -3,6 +3,9 @@
 
 #include "sync_info.h"
 
+/*!
+ * @brief Default sync info
+*/
 class DefaultSyncInfo : public SyncInfo
 {
 	PDOEntriesList *txpdo = nullptr;
@@ -16,6 +19,11 @@ class DefaultSyncInfo : public SyncInfo
 public:
 	DefaultSyncInfo() = default;
 	~DefaultSyncInfo();
+	/**
+	 * @brief Add txpdo
+	 * @param txpdo mapping index
+	 * @param txpdo
+	*/
 	void AddTxPDO(uint16_t tx_mapping, PDOEntriesList* tx);	
 	void AddRxPDO(uint16_t rx_mapping, PDOEntriesList* rx);
 	PDOEntriesList* GetRxPDO() override;

@@ -48,11 +48,6 @@ void EthercatConfiguration::RegisterMaster(EthercatMaster* master)
 	this->master = master;
 }
 
-void EthercatConfiguration::RegisterDomain(EthercatDomain* domain)
-{
-	this->domain = domain;
-}
-
 void EthercatConfiguration::RegisterTimer(EthercatTimer* timer)
 {
 	this->timer = timer;

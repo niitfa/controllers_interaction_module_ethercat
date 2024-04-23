@@ -92,24 +92,26 @@ int main(int argc,char** argv)
 	while(true)
 	{
 		int32_t pos_0, pos_1;
-		std::cout << "Enter drive 0 (HIWIN) position:\n> ";
-		std::cin >> pos_0;
+		//std::cout << "Enter drive 0 (HIWIN) position:\n> ";
+		//std::cin >> pos_0;
 		std::cout << "Enter drive 1 (LEADSHINE) position:\n> ";	
 		std::cin >> pos_1;
-		std::cout << "Moving...\n\n";
+		//std::cout << "Moving...\n\n";
 
-		LonelyDriveEnableTask* enable_drive_0 = LonelyDriveEnableTask::CreateTaskFor(mech_subsystem_0);
+		/*LonelyDriveEnableTask* enable_drive_0 = LonelyDriveEnableTask::CreateTaskFor(mech_subsystem_0);
 		LonelyDriveMoveTask* move_drive_0 = LonelyDriveMoveTask::CreateTaskFor(mech_subsystem_0);
 		move_drive_0->SetTargetPosition(pos_0);
 		LonelyDriveTaskState::StartQueueWith(enable_drive_0)
 			->WithNextTask(move_drive_0);
-		mech_subsystem_0->SetTask(enable_drive_0);
+		mech_subsystem_0->SetTask(enable_drive_0); */
 
 		LonelyDriveEnableTask* enable_drive_1 = LonelyDriveEnableTask::CreateTaskFor(mech_subsystem_1);
 		LonelyDriveMoveTask* move_drive_1 = LonelyDriveMoveTask::CreateTaskFor(mech_subsystem_1);
 		move_drive_1->SetTargetPosition(pos_1);
+
 		LonelyDriveTaskState::StartQueueWith(enable_drive_1)
 			->WithNextTask(move_drive_1);
+			
 		mech_subsystem_1->SetTask(enable_drive_1);	
 	}
 

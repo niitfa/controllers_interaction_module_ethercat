@@ -15,26 +15,26 @@ ec_slave_config_t* EthercatSlave::GetConfig()
 
 std::string EthercatSlave::GetName() 
 {
-	return this->slave_info.name;
+	return this->name;
 }
 
 uint16_t EthercatSlave::GetAlias() 
 {
-	return this->slave_info.alias;
+	return this->alias;
 }
 uint16_t EthercatSlave::GetPosition() 
 {
-	return this->slave_info.position;
+	return this->position;
 }
 
 uint32_t EthercatSlave::GetVendorID() 
 {
-	return this->slave_info.vendor_id;
+	return this->vendor_id;
 }
 
 uint32_t EthercatSlave::GetProductCode() 
 {
-	return this->slave_info.product_code;
+	return this->product_code;
 }
 
 uint32_t EthercatSlave::GetAssignActivate() 
@@ -79,11 +79,11 @@ void EthercatSlave::SetSlaveInfo(
 	uint32_t vendor_id, 
 	uint32_t product_code)
 {
-	this->slave_info.name = name;
-	this->slave_info.alias = alias;	
-	this->slave_info.position = position;	
-	this->slave_info.vendor_id = vendor_id;	
-	this->slave_info.product_code = product_code;		
+	this->name = name;
+	this->alias = alias;	
+	this->position = position;	
+	this->vendor_id = vendor_id;	
+	this->product_code = product_code;		
 }
 
 void EthercatSlave::SetAssignActivate(uint32_t assign_activate)
@@ -97,7 +97,7 @@ CoEObject* EthercatSlave::GetTxPDOEntry(std::string obj_name)
 	if (!obj) 
 	{
 		std::cerr << ">>> Ethercat: error. Can't find registered TxPDO entry \""
-		<< obj_name << "\" for slave \"" << this->slave_info.name << "\".\n";
+		<< obj_name << "\" for slave \"" << this->name << "\".\n";
 	}
 	return obj;		
 }
@@ -108,7 +108,7 @@ CoEObject* EthercatSlave::GetRxPDOEntry(std::string obj_name)
 	if (!obj) 
 	{
 		std::cerr << ">>> Ethercat: error. Can't find registered RxPDO entry \""
-		<< obj_name << "\" for slave \"" << this->slave_info.name << "\".\n";
+		<< obj_name << "\" for slave \"" << this->name << "\".\n";
 	}
 	return obj;		
 }
@@ -119,7 +119,7 @@ CoEObject* EthercatSlave::GetParameterSDOEntry(std::string obj_name)
 	if(!obj)
 	{
 		std::cerr << ">>> Ethercat: error. Can't find registered SDO entry \""
-		<< obj_name << "\" for slave \"" << this->slave_info.name << "\".\n";		
+		<< obj_name << "\" for slave \"" << this->name << "\".\n";		
 	}
 	return obj;
 }
@@ -130,7 +130,7 @@ CoEObject* EthercatSlave::GetTelemetrySDOEntry(std::string obj_name)
 	if(!obj)
 	{
 		std::cerr << ">>> Ethercat: error. Can't find registered SDO entry \""
-		<< obj_name << "\" for slave \"" << this->slave_info.name << "\".\n";		
+		<< obj_name << "\" for slave \"" << this->name << "\".\n";		
 	}
 	return obj;
 }
@@ -141,21 +141,21 @@ void EthercatSlave::Configure(ec_master_t* master)
 {
 	this->slave_config = ecrt_master_slave_config(
 		master,
-		this->slave_info.alias,
-		this->slave_info.position,
-		this->slave_info.vendor_id,
-		this->slave_info.product_code
+		this->alias,
+		this->position,
+		this->vendor_id,
+		this->product_code
 		);
 
 	if(!slave_config)
 	{
 		std::cerr << ">>> Ethercat: " << "can't configure slave "
-		<< this->slave_info.position << " \"" << this->slave_info.name << "\"\n";
+		<< this->position << " \"" << this->name << "\"\n";
 	}
 	else
 	{
 		std::cerr << ">>> Ethercat: " << "slave "
-	 	<< this->slave_info.position << " \"" << this->slave_info.name << "\" is configured.\n";
+	 	<< this->position << " \"" << this->name << "\" is configured.\n";
 	}
 }
 
@@ -164,12 +164,12 @@ void EthercatSlave::CreatePDO()
 	if (ecrt_slave_config_pdos(slave_config, EC_END, sync_info->GetSyncs()))
 	{
         std::cerr << ">>> Ethercat: " << "Failed to configure PDOs for slave " 
-        << this->slave_info.position << " \"" << this->slave_info.name << "\"\n";
+        << this->position << " \"" << this->name << "\"\n";
     }
     else
     {
     	std::cerr << ">>> Ethercat: " << "PDO entries for slave " 
-        << this->slave_info.position << " \"" << this->slave_info.name << "\"" 
+        << this->position << " \"" << this->name << "\"" 
         <<" are configured.\n";
     }
 }
