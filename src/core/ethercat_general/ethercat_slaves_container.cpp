@@ -26,7 +26,11 @@ void EthercatSlavesContainer::ConfigureAllSlaves(EthercatMaster* master)
 
 EthercatSlave* EthercatSlavesContainer::GetSlave(std::string name)
 {
-	return slaves.find(name)->second;
+	if(slaves.find(name) != slaves.end())
+	{
+		return slaves.find(name)->second;
+	}
+	return nullptr;
 }
 
 uint16_t EthercatSlavesContainer::GetSize()

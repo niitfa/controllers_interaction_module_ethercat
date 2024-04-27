@@ -40,6 +40,5 @@ void EthercatTelemetryBroker::ModifyEthercatTelemetry(EthercatConfiguration* eth
 		modified_telemetry->slaves_info.push_back({});
 		ecrt_master_get_slave(ethercat_config->GetMaster()->GetRequest(), i, &(modified_telemetry->slaves_info.back()));
 	}
-	/* Актуализировать значения всех полей ethercat-сети */
 }
 

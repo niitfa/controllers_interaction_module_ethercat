@@ -1,5 +1,5 @@
 /**
- * @brief Contains ethercat slave properties and methods.
+ * @brief Contains ethercat slave's properties and methods.
  * Member of EthercatSlavesContainer.
  * @details Configuraton example:
  * @code
@@ -16,6 +16,7 @@
  * 		// previously defined in coe_object_names namespace.
  * 		// Using other std::string values as CoE object names is
  * 		// not recommended.
+ * 
  * 		PDOEntriesList* rxpdo = new PDOEntriesList();
  * 		rxpdo->AddEntry(coe_object_names::kObjectName1, 0x7001, 0x00, 16);
  * 		rxpdo->AddEntry(coe_object_names::kObjectName2, 0x7002, 0x01, 8);
@@ -33,18 +34,22 @@
  * 		sdo_parameters->AddObject(coe_object_names::kObjectName5, 0x7015, 0x02, 16, -50000);
  * 		sdo_parameters->SetTimeout(500);
  * 		SDOList* sdo_telemetry = new SDOList();
- * 		sdo_telemetry->AddObject(coe_object_names::kObjectName6, 0x6020, 0x00, 8, 0b00010111);
+ * 		sdo_telemetry->AddObject(coe_object_names::kObjectName6, 0x6020, 0x00, 8);
  * 		sdo_telemetry->SetTimeout(500);
  * 
  * 		EthercatSlave* slave = new EthercatSlave();
+ * 
  * 		// Value ethercat_slave_names::kSomeEthercatSlaveName
  * 		// should be previously defined in ethercat_slave_names namespace.
  * 		// Using other std::string values as slave names is not recommended.
+ * 
  * 		slave->SetSlaveInfo(ethercat_slave_names::kSomeEthercatSlaveName, 0, 0, 0x5555, 0xAAAA);
  * 		slave->RegisterSync(sync);
  * 		slave->RegisterParameterSDO(sdo_parameters);
  * 		slave->RegisterTelemetrySDO(sdo_telemetry);
+ * 
  * 		// If using distributed clocks
+ * 
  * 		slave->SetAssignActivate(0x0300) 	
  * }
  * 
@@ -87,51 +92,51 @@ public:
 	ec_slave_config_t* GetConfig();
 	/**
 	 * @brief Gets slave's name.
-	 * @returns slave name.
+	 * @returns Slave's name.
 	*/
 	std::string GetName();
 	/**
 	 * @brief Gets slave's alias.
-	 * @returns alias.
+	 * @returns Slave's alias
 	*/
 	uint16_t GetAlias();
 	/**
 	 * @brief Gets slave's position.
-	 * @returns position.
+	 * @returns Slave's position.
 	*/
 	uint16_t GetPosition();
 	/**
 	 * @brief Gets slave's vendor id.
-	 * @returns vendor id.
+	 * @returns Slave's vendor id.
 	*/
 	uint32_t GetVendorID();
 	/**
 	 * @brief Gets slave's product code.
-	 * @returns product code.
+	 * @returns Slave's product code.
 	*/
 	uint32_t GetProductCode();
 	/**
 	 * @brief Gets slave's assign activate
 	 *  (previously passed with SetAssignActivate(uint32_t))
 	 * @see SetAssignActivate(uint32_t)
-	 * @returns assign activate
+	 * @returns Slave's assign activate
 	*/
 	uint32_t GetAssignActivate();
 	/**
 	 * @brief Gets pointer to current SyncInfo instance.
-	 * @returns current SyncInfo pointer.
+	 * @returns Current SyncInfo pointer.
 	 * @warning Must NOT be called by user!
 	*/
 	SyncInfo* GetSync();
 	/**
 	 * @brief Gets pointer to current parameter SDOList.
-	 * @returns current parameter SDOList pointer.
+	 * @returns Current parameter SDOList pointer.
 	 * @warning Must NOT be called by user!
 	*/
 	SDOList* GetParameterSDO();
 	/**
 	 * @brief Gets pointer to current telemetry SDOList.
-	 * @returns current telemetry SDOList pointer.
+	 * @returns Current telemetry SDOList pointer.
 	 * @warning Must NOT be called by user!
 	*/	
 	SDOList* GetTelemetrySDO();
@@ -175,14 +180,59 @@ public:
 	 * @param[in] assign_activate assign activate value.
 	*/
 	void SetAssignActivate(uint32_t assign_activate);
-
-	CoEObject* GetTxPDOEntry(std::string);
-	CoEObject* GetRxPDOEntry(std::string);
-	CoEObject* GetParameterSDOEntry(std::string);
-	CoEObject* GetTelemetrySDOEntry(std::string);
-
-	void Configure(ec_master_t*);
+	/**
+	 * @brief Finds CoE object in slave's TxPDO by name and returns it's pointer
+	 * @param[in] name Name of the object.
+	 * @returns Pointer to CoE object with given name if it exists in sync, otherwise returns nullptr.
+	 * @see CoEObject, SyncInfo.
+	 * @warning Must NOT de called by user!
+	*/
+	CoEObject* GetTxPDOEntry(std::string name);
+	/**
+	 * @brief Finds CoE object in slave's RxPDO by name and returns it's pointer
+	 * @param[in] name name of the object.
+	 * @returns Pointer to CoE object with given name if it exists in sync, otherwise returns nullptr.
+	 * @see CoEObject, SyncInfo.
+	 * @warning Must NOT de called by user!
+	*/	
+	CoEObject* GetRxPDOEntry(std::string name);
+	/**
+	 * @brief Finds CoE object in slave's parameter SDOs by name and returns it's pointer
+	 * @param[in] name name of the object.
+	 * @returns Pointer to CoE object with given name if it exists in parameter SDO, otherwise returns nullptr.
+	 * @see CoEObject, RegisterParameterSDO, SDOList.
+	 * @warning Must NOT de called by user!
+	*/	
+	CoEObject* GetParameterSDOEntry(std::string name);
+	/**
+	 * @brief Finds CoE object in slave's telemetry SDOs by name and returns it's pointer
+	 * @param[in] name name of the object.
+	 * @returns Pointer to CoE object with given name if it exists in telemetry SDOs, otherwise returns nullptr.
+	 * @see CoEObject, RegisterTelemetrySDO, SDOList.
+	 * @warning Must NOT de called by user!
+	*/	
+	CoEObject* GetTelemetrySDOEntry(std::string name);
+	/**
+	 * @brief Configures slave in network.
+	 * @param[in] master IgH ethercat master request.
+	 * @warning Must NOT de called by user!
+	*/
+	void Configure(ec_master_t* master);
+	/**
+	 * @brief Creates TxPDO and RxPDO for this slave.
+	 * @details PDO content must be defined previously by
+	 * calling RegisterSync() method.
+	 * @see RegisterSync()
+	 * @warning Must NOT be called by user!
+	*/
 	void CreatePDO();
+	/**
+	 * @brief Creates SDOs for this slave.
+	 * @details SDO content must be defined previously by
+	 * calling RegisterParameterSDO() and RegisterTelemetrySDO() methods.
+	 * @see RegisterParameterSDO(), RegisterTelemetrySDO()
+	 * @warning Must NOT be called by user!
+	*/
 	void CreateSDO();
 };
 

@@ -3,7 +3,7 @@
 
 #include "sync_info.h"
 
-/*!
+/**
  * @brief Default sync info
 */
 class DefaultSyncInfo : public SyncInfo

@@ -1,3 +1,9 @@
+/**
+ * @brief Basic class. Stores slave's PDOs and mappings.
+ * Member of EthercatSlave.
+ * @see EthercatSlave.
+*/
+
 #ifndef SYNC_INFO_H
 #define SYNC_INFO_H
 
@@ -11,10 +17,13 @@ class SyncInfo
 {
 public:
 	virtual ~SyncInfo() = default;
+	/**
+	 * @brief 
+	*/
 	virtual void Create() = 0;
-	virtual PDOEntriesList* GetRxPDO() = 0;
-	virtual PDOEntriesList* GetTxPDO() = 0;	
-	virtual ec_sync_info_t* GetSyncs() = 0;
+	virtual PDOEntriesList *GetRxPDO() = 0;
+	virtual PDOEntriesList *GetTxPDO() = 0;
+	virtual ec_sync_info_t *GetSyncs() = 0;
 };
 
 #endif
