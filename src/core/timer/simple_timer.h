@@ -10,6 +10,8 @@ public:
 	void ConfigureClocks() override;
 	void SyncDistributedClocks(EthercatMaster* master) override;
 	void UpdateMasterClock() override;	
+	int64_t GetCurrentTime() override;	
+
 };
 
 #endif

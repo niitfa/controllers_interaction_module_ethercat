@@ -44,6 +44,8 @@ public:
 	void SetSlavesClocks(EthercatSlavesContainer*);
 	void SetShiftMicroseconds(uint32_t);
 	uint32_t GetShiftMicroseconds();
+
+	int64_t GetCurrentTime() override;
 };
 
 

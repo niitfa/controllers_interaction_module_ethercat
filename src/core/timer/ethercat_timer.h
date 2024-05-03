@@ -25,6 +25,8 @@ public:
 	void SetPeriodMicroseconds(uint32_t);	
 	uint32_t GetFrequency();
 	uint32_t GetPeriodMicroseconds();
+
+	virtual int64_t GetCurrentTime() = 0;	
 };
 
 #endif

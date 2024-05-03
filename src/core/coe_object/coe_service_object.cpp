@@ -57,8 +57,3 @@ int CoEServiceObject::ReadTypeRequest()
 
 	return request_is_successful;	
 }
-
-ec_sdo_request_t* CoEServiceObject::GetSDORequest() 
-{
-    return this->sdo_request;
-}

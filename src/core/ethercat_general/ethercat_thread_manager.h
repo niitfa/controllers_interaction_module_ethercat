@@ -10,7 +10,7 @@
  * 		UnspecifiedDevice* device;
  * 
  * 		// Class UnspecifiedDevice is derived from DeviceModel.
- * 		// Let's see device was previously configured.
+ * 		// Let's say device was previously configured.
  * 		// See UnspecifiedDevice configuration example in class definition.
  * 
  * 		EthercatThreadManager* ethercat_thread = new EthercatThreadManager();
@@ -33,11 +33,13 @@
 
 #include <thread>
 #include <atomic>
+#include <vector>
 #include "device_model.h"
 #include "ethercat_configuration.h"
 
 class EthercatThreadManager
 {
+	std::vector<int> cpus;
 	DeviceModel* device = nullptr;
 	std::atomic<bool> is_launched; // для контроля наличия активного потока
 	std::atomic<bool> is_initialized;  // для контроля блокировки в главном потоке в процессе инициализации
@@ -59,6 +61,11 @@ public:
 	 * @brief Stops thread.
 	*/
 	void StopThread();
+	/**
+	 * @brief Set CPUs for created thread.
+	 * @param[in] cpus CPU logical cores thread will work on.
+	*/
+	void SetCPUs(std::vector<int> cpus); 
 private:
 	/**
 	 * @brief Main ethercat thread method. 

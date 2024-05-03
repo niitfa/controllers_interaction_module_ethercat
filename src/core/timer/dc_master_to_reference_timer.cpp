@@ -196,3 +196,8 @@ uint32_t DCMasterToReferenceTimer::GetShiftMicroseconds()
 {
     return this->shift;
 }
+
+int64_t DCMasterToReferenceTimer::GetCurrentTime()
+{
+    return SystemTimeNanoseconds();
+}

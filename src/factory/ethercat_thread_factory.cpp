@@ -87,6 +87,7 @@ void ConfigureNetwork_0(EthercatThreadManager* thread, UnspecifiedDevice* device
 	device->RegisterEthercatConfig(ethercat_config);
 	/* Building device */
 	thread->RegisterDevice(device);
+	thread->SetCPUs({14, 32});
 }
 
 void ConfigureNetwork_1(EthercatThreadManager* thread, UnspecifiedDevice* device,  LonelyDrive* mech_subsystem)
@@ -162,4 +163,5 @@ void ConfigureNetwork_1(EthercatThreadManager* thread, UnspecifiedDevice* device
 	device->RegisterEthercatConfig(ethercat_config);
 	/* Building device */
 	thread->RegisterDevice(device);
+	thread->SetCPUs({13});
 }
