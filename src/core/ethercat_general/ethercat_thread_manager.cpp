@@ -55,7 +55,8 @@ void EthercatThreadManager::Handler()
 		is_initialized.store(true);
 
 		/* Логирование свойств цикла */
-		uint32_t size = 1000 * 60 * 60 * 15;
+		uint32_t size = 1000 * 60  * 60 * 24 * 2;
+		//uint32_t size = 30000;
 		std::string filename = "cycle_time.txt";
 
 		CycleTester cycle_logger;

@@ -10,7 +10,7 @@
  * {
  * 		EthercatSlave *slave_1, *slave_2, *slave_3;
  * 
- * 		// let's see slave_1, slave_2, slave_3 were previously
+ * 		// let's say slave_1, slave_2, slave_3 were previously
  * 		// configured (see EthercatSlave example in class description)
  * 
  * 		EthercatSlavesContainer* slaves = new EthercatSlavesContainer();
