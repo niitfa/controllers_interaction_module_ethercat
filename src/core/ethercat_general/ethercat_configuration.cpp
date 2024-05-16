@@ -68,33 +68,7 @@ void EthercatConfiguration::Initialize()
 		timer->ConfigureClocks();	
 		master->Activate();
 		domain->SetProcessData(slaves);
-
-		/* Mailbox tasks */
-
-		SDOList* sdos_to_write = new SDOList();
-		auto slaves_map = this->slaves->GetMap();
-		for(auto it = slaves_map->begin(); it != slaves_map->end(); ++it)
-		{
-			sdos_to_write->MergeWith(it->second->GetParameterSDO());
-		}
-
-
-		SDOList* sdos_to_read = new SDOList();
-		for(auto it = slaves_map->begin(); it != slaves_map->end(); ++it)
-		{
-			sdos_to_read->MergeWith(it->second->GetTelemetrySDO());
-		}
-
-
-		MailboxWritingState* write_mailbox_state = new MailboxWritingState();
-		write_mailbox_state->SetSDOList(sdos_to_write);		
-		MailboxReadingState* read_mailbox_state = new MailboxReadingState();
-		read_mailbox_state->SetSDOList(sdos_to_read);
-
-		MailboxState::StartQueueWith(write_mailbox_state)
-			->WithNextTask(read_mailbox_state);
-
-		mailbox->SetMailboxMode(write_mailbox_state);
+		this->PrepareMailboxTasks();
 	}
 }
 
@@ -154,4 +128,38 @@ const EthercatNetworkTelemetry* EthercatConfiguration::GetTelemetry()
 EthercatNetworkTelemetry* EthercatConfiguration::GetMasterTelemetry()
 {
 	return this->telemetry_broker->GetMasterEthercatTelemetry();
+}
+
+void EthercatConfiguration::PrepareMailboxTasks()
+{
+	SDOList* sdos_to_write = new SDOList();
+	auto slaves_map = this->slaves->GetMap();
+	for(auto it = slaves_map->begin(); it != slaves_map->end(); ++it)
+	{
+		if(it->second->GetParameterSDO())
+		{
+			sdos_to_write->MergeWith(it->second->GetParameterSDO());
+		}
+	}
+
+
+	SDOList* sdos_to_read = new SDOList();
+	for(auto it = slaves_map->begin(); it != slaves_map->end(); ++it)
+	{
+		if(it->second->GetTelemetrySDO())
+		{
+			sdos_to_read->MergeWith(it->second->GetTelemetrySDO());
+		}
+	}
+
+
+	MailboxWritingState* write_mailbox_state = new MailboxWritingState();
+	write_mailbox_state->SetSDOList(sdos_to_write);		
+	MailboxReadingState* read_mailbox_state = new MailboxReadingState();
+	read_mailbox_state->SetSDOList(sdos_to_read);
+
+	MailboxState::StartQueueWith(write_mailbox_state)
+		->WithNextTask(read_mailbox_state);
+
+	mailbox->SetMailboxMode(write_mailbox_state);	
 }

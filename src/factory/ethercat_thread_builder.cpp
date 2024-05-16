@@ -2,12 +2,15 @@
 #include "ethercat_thread_manager.h"
 #include "ethercat_slave_builder.h"
 #include "ethercat_slaves_container.h"
+#include "dc_master_to_reference_timer.h"
 #include "simple_timer.h"
 #include "io_module_cn8033.h"
 
 EthercatThreadBuilder::IOModuleThreadContent EthercatThreadBuilder::BuildThread_IOModule(int master_index)
 {
     uint32_t frequency_hz = 1000;
+    uint32_t dc_shift_us = 500;
+
 
     EthercatMaster* ethercat_master = new EthercatMaster();
 	ethercat_master->SetMasterIndex(master_index);
@@ -16,8 +19,15 @@ EthercatThreadBuilder::IOModuleThreadContent EthercatThreadBuilder::BuildThread_
     EthercatSlave* io_module_cn_8033 = EthercatSlaveBuilder::BuildIOModule(0, 0);
     ethercat_slaves->RegisterSlave(io_module_cn_8033);
 
-    SimpleTimer* timer = new SimpleTimer();
-    timer->SetFrequency(frequency_hz);
+	/*DCMasterToReferenceTimer* timer = new DCMasterToReferenceTimer();
+	timer->SetFrequency(frequency_hz);
+	timer->SetShiftMicroseconds(dc_shift_us);
+	timer->SetMaster(ethercat_master);
+	timer->SetSlavesClocks(ethercat_slaves);
+	timer->SetReferenceSlaveClock(io_module_cn_8033); */
+
+	SimpleTimer* timer = new SimpleTimer();
+	timer->SetFrequency(frequency_hz);
 
     EthercatConfiguration* ethercat_config = new EthercatConfiguration();
     ethercat_config->RegisterMaster(ethercat_master);
@@ -40,7 +50,7 @@ EthercatThreadBuilder::IOModuleThreadContent EthercatThreadBuilder::BuildThread_
     thread_content.thread = thread;   
     thread_content.device = device;
     thread_content.io_module = io_module;
-    
+
     return thread_content;
 
 }

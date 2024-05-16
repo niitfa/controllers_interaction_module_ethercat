@@ -47,18 +47,24 @@ void EthercatSlavesContainer::ReadProcessDataFromDomain()
 {
 	for(auto it = slaves.begin(); it != slaves.end(); ++it)
 	{
-		auto rxpdo_map = it->second->GetSync()->GetRxPDO()->GetMap();
-		auto txpdo_map = it->second->GetSync()->GetTxPDO()->GetMap();
-
-		for (auto it_pdo = rxpdo_map->begin(); it_pdo != rxpdo_map->end(); ++it_pdo)
+		auto rxpdo = it->second->GetSync()->GetRxPDO();
+		if(rxpdo)
 		{
-	
-			it_pdo->second->ReadValueFromFrame();
+			auto rxpdo_map = rxpdo->GetMap();
+			for (auto it_pdo = rxpdo_map->begin(); it_pdo != rxpdo_map->end(); ++it_pdo)
+			{
+				it_pdo->second->ReadValueFromFrame();
+			}
 		}
 
-		for (auto it_pdo = txpdo_map->begin(); it_pdo != txpdo_map->end(); ++it_pdo)
+		auto txpdo = it->second->GetSync()->GetTxPDO();
+		if(txpdo)
 		{
-			it_pdo->second->ReadValueFromFrame();
+			auto txpdo_map = txpdo->GetMap();
+			for (auto it_pdo = txpdo_map->begin(); it_pdo != txpdo_map->end(); ++it_pdo)
+			{
+				it_pdo->second->ReadValueFromFrame();
+			}
 		}
 	}
 }
@@ -66,10 +72,14 @@ void EthercatSlavesContainer::WriteProcessDataToDomain()
 {
 	for(auto it = slaves.begin(); it != slaves.end(); ++it)
 	{
-		auto rxpdo_map = it->second->GetSync()->GetRxPDO()->GetMap();
-		for (auto it_pdo = rxpdo_map->begin(); it_pdo != rxpdo_map->end(); ++it_pdo)
+		auto rxpdo = it->second->GetSync()->GetRxPDO();
+		if(rxpdo)
 		{
-			it_pdo->second->WriteValueToFrame();
+			auto rxpdo_map = rxpdo->GetMap();
+			for (auto it_pdo = rxpdo_map->begin(); it_pdo != rxpdo_map->end(); ++it_pdo)
+			{
+				it_pdo->second->WriteValueToFrame();
+			}
 		}
 	}
 }

@@ -19,6 +19,10 @@ void 		CoEObject::StoreValue(int64_t val) 	{ this->value = val; }
 
 void CoEObject::ReadValueFromFrame()
 {
+	/*std::cout << "domain_offset: " << domain_offset << "\n"
+		<< "byte_position: " << byte_position << "\n"
+		<< "bit_position: " << bit_position << "\n"; */
+
 	this->value = ec_read_le(
 		this->domain_offset, 
 		this->byte_position, 

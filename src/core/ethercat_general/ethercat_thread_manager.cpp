@@ -54,25 +54,12 @@ void EthercatThreadManager::Handler()
 		ethercat_config->Initialize();
 		is_initialized.store(true);
 
-		/* Логирование свойств цикла */
-		uint32_t size = 1000 * 60  * 60 * 24 * 2;
-		//uint32_t size = 30000;
-		std::string filename = "cycle_time.txt";
-
-		CycleTester cycle_logger;
-		cycle_logger.CreateStorage(filename, size);
-
 		while (!is_stop_forced.load())
 		{
 			ethercat_config->GetTimer()->Sleep();
-
-			cycle_logger.CaptureCycleBegin(ethercat_config->GetTimer()->GetCurrentTime()); /* Cycle begin */
-		
 			ethercat_config->PreProcessingAction();
 			device->Action();
 			ethercat_config->PostProcessingAction();
-
-			cycle_logger.CaptureCycleEnd(ethercat_config->GetTimer()->GetCurrentTime()); /* Cycle end */
 		}
 		ethercat_config->Release();
 	}

@@ -15,6 +15,8 @@
 
 class SyncInfo
 {
+protected:
+	uint16_t size = 0;
 public:
 	virtual ~SyncInfo() = default;
 	/**
@@ -41,6 +43,7 @@ public:
 	 * @warning Must NOT be called by user!
 	*/
 	virtual ec_sync_info_t* GetSyncs() = 0;
+	uint16_t GetSize();
 };
 
 #endif

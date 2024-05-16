@@ -70,6 +70,7 @@
 
 class EthercatSlave
 { 
+protected:
 	std::string name{""};
 	uint16_t alias{0};
 	uint16_t position{0};
@@ -225,7 +226,7 @@ public:
 	 * @see RegisterSync()
 	 * @warning Must NOT be called by user!
 	*/
-	void CreatePDO();
+	virtual void CreatePDO();
 	/**
 	 * @brief Creates SDOs for this slave.
 	 * @details SDO content must be defined previously by

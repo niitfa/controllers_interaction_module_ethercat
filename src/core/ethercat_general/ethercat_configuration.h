@@ -132,6 +132,7 @@ private:
 	 * @warning Must NOT be called by user!
 	*/
 	EthercatNetworkTelemetry* GetMasterTelemetry();
+	void PrepareMailboxTasks();
 };
 
 #endif

@@ -43,7 +43,7 @@ public:
 	/**
 	 * @brief Configures slaves
 	 * @param[in] master Ethercat master which slaves must be configured for.
-	 * @warning Must NOT be used by user!
+	 * @warning Must NOT be called by user!
 	*/
 	void ConfigureAllSlaves(EthercatMaster* master);
 	/**

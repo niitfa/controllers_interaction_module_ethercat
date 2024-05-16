@@ -161,7 +161,7 @@ void EthercatSlave::Configure(ec_master_t* master)
 
 void EthercatSlave::CreatePDO()
 {
-	if (ecrt_slave_config_pdos(slave_config, EC_END, sync_info->GetSyncs()))
+	if (ecrt_slave_config_pdos(slave_config, sync_info->GetSize(), sync_info->GetSyncs()))
 	{
         std::cerr << ">>> Ethercat: " << "Failed to configure PDOs for slave " 
         << this->position << " \"" << this->name << "\"\n";

@@ -29,13 +29,16 @@
 
 class DefaultSyncInfo : public SyncInfo
 {
+protected:
 	PDOEntriesList *txpdo = nullptr;
 	PDOEntriesList *rxpdo = nullptr;
 	uint16_t txpdo_mapping, rxpdo_mapping;
 	ec_pdo_entry_info_t *txpdo_entries = nullptr;
 	ec_pdo_entry_info_t *rxpdo_entries = nullptr;
-	ec_pdo_info_t* pdos = nullptr;
 	ec_sync_info_t* syncs = nullptr;
+
+	ec_pdo_info_t* ec_txpdo = NULL;
+	ec_pdo_info_t* ec_rxpdo = NULL;	
 
 public:
 	DefaultSyncInfo() = default;
@@ -68,6 +71,8 @@ public:
 	 * @brief See SyncInfo::Create().
 	*/
 	void Create() override;	
+protected:
+	void PreparePDOs();
 };
 
 #endif

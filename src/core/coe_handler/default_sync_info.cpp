@@ -1,4 +1,5 @@
 #include "default_sync_info.h"
+#include <iostream>
 
 DefaultSyncInfo::~DefaultSyncInfo()
 {
@@ -6,7 +7,8 @@ DefaultSyncInfo::~DefaultSyncInfo()
 	delete txpdo;
 	delete[] rxpdo_entries;		
 	delete[] txpdo_entries;
-	delete[] pdos;
+	delete ec_txpdo;
+	delete ec_rxpdo;
 	delete[] syncs;
 }
 
@@ -26,14 +28,27 @@ ec_sync_info_t* DefaultSyncInfo::GetSyncs() { return this->syncs; }
 
 void DefaultSyncInfo::Create()
 {
-	if(this->rxpdo && this->txpdo)
-	{
-		auto rxpdo_map = rxpdo->GetMap();		
-		auto txpdo_map = txpdo->GetMap();
-		rxpdo_entries = new ec_pdo_entry_info_t[rxpdo->GetSize()];
-		txpdo_entries = new ec_pdo_entry_info_t[txpdo->GetSize()];
+	this->PreparePDOs();
 
+	uint16_t sync_size = 5;
+	syncs = new ec_sync_info_t[sync_size];
+	syncs[0] = {0, EC_DIR_OUTPUT, 	0, NULL, EC_WD_DISABLE};
+	syncs[1] = {1, EC_DIR_INPUT, 	0, NULL, EC_WD_DISABLE};
+	syncs[2] = {2, EC_DIR_OUTPUT, 	1, ec_rxpdo, EC_WD_ENABLE};
+	syncs[3] = {3, EC_DIR_INPUT, 	1, ec_txpdo, EC_WD_DISABLE};
+	syncs[4] = {0xff}; 
+
+	this->SyncInfo::size = sync_size;
+}
+
+void DefaultSyncInfo::PreparePDOs()
+{
+	if(rxpdo)
+	{
 		int index = 0;
+		auto rxpdo_map = rxpdo->GetMap();
+		rxpdo_entries = new ec_pdo_entry_info_t[rxpdo->GetSize()];
+
 		for(auto it = rxpdo_map->begin(); it != rxpdo_map->end(); ++it)
 		{
 			rxpdo_entries[index++] = {
@@ -41,9 +56,17 @@ void DefaultSyncInfo::Create()
 				it->second->GetSubindex(),
 				it->second->GetSizeBit()				
 			};
-		}			
+		}
+			
+		ec_rxpdo = new ec_pdo_info_t;
+		*ec_rxpdo = {rxpdo_mapping, rxpdo->GetSize(), rxpdo_entries};
+	}		
 
-		index = 0;
+	if(txpdo)
+	{
+		int index = 0;
+		auto txpdo_map = txpdo->GetMap();
+		txpdo_entries = new ec_pdo_entry_info_t[txpdo->GetSize()];		
 		for(auto it = txpdo_map->begin(); it != txpdo_map->end(); ++it)
 		{
 			txpdo_entries[index++] = {
@@ -51,17 +74,9 @@ void DefaultSyncInfo::Create()
 				it->second->GetSubindex(),
 				it->second->GetSizeBit()				
 			};
-		}	
+		}
 
-		pdos = new ec_pdo_info_t[2];
-		pdos[0] = {rxpdo_mapping, rxpdo->GetSize(), rxpdo_entries};
-		pdos[1] = {txpdo_mapping, txpdo->GetSize(), txpdo_entries};
-
-		syncs = new ec_sync_info_t[5];
-		syncs[0] = {0, EC_DIR_OUTPUT, 	0, NULL, EC_WD_DISABLE};
-		syncs[1] = {1, EC_DIR_INPUT, 	0, NULL, EC_WD_DISABLE};
-		syncs[2] = {2, EC_DIR_OUTPUT, 	1, pdos + 0, EC_WD_ENABLE};
-		syncs[3] = {3, EC_DIR_INPUT, 	1, pdos + 1, EC_WD_DISABLE};
-		syncs[4] = {0xff};
-	}
+		ec_txpdo = new ec_pdo_info_t;	
+		*ec_txpdo = {txpdo_mapping, txpdo->GetSize(), txpdo_entries};
+	}		
 }
