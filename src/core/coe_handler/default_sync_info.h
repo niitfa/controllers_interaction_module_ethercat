@@ -29,7 +29,6 @@
 
 class DefaultSyncInfo : public SyncInfo
 {
-protected:
 	PDOEntriesList *txpdo = nullptr;
 	PDOEntriesList *rxpdo = nullptr;
 	uint16_t txpdo_mapping, rxpdo_mapping;

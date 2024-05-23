@@ -82,6 +82,8 @@ protected:
 	SDOList* sdo_parameters = nullptr;
 	SDOList* sdo_telemetry = nullptr;
 	uint32_t assign_activate = 0;
+
+	bool with_dc = false;
 public:
 	EthercatSlave() = default;
 	virtual ~EthercatSlave();
@@ -235,6 +237,16 @@ public:
 	 * @warning Must NOT be called by user!
 	*/
 	void CreateSDO();
+	/**
+	 * @brief Enables distributed clocks.
+	 * @warning Call SetAssignActivate(uint32_t assign_activate) with this method
+	 * @see SetAssignActivate(uint32_t assign_activate).
+	*/
+	void WithDistributedClocks();
+	/**
+	 * @brief Returns current DC permission state. 
+	*/
+	bool HasEnabledDistributedClocks();
 };
 
 #endif

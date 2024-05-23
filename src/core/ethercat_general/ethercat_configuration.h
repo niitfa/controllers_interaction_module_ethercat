@@ -58,10 +58,19 @@ public:
 	*/
 	EthercatSlavesContainer* GetSlaves();
 	/**
+	 * @brief Finds ethercat slave in container by name and returns it's pointer.
+	 * @param[in] name Name of the ethercat slave.
+	 * @returns Pointer to ethercat slave with given name if it exists
+	 * in container, otherwise returns nullptr.
+	 * @warning Must NOT be called by user!
+	*/
+	EthercatSlave* GetSlave(std::string name);	
+	/**
 	 * @brief Gets MailboxManager instance.
 	 * @returns Pointer to current MailboxManager object.
 	 * @warning Must NOT be called by user!
 	*/
+
 	MailboxManager* GetMailbox();
 	/**
 	 * @brief Registers ethercat master.

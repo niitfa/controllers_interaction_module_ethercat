@@ -32,7 +32,7 @@ void DCMasterToReferenceTimer::Sleep()
 		{
 	        clock_gettime(CLOCK_REALTIME, &dcTime_ref);
 	        AddNanosecondsToTimespec(period_nanoseconds, &dcTime_ref);
-	        is_timer_launched  = true;
+	        is_timer_launched = true;
 	    }
 
 	    int64_t dcTime_curr_ns = SystemTimeNanoseconds();
@@ -51,13 +51,16 @@ void DCMasterToReferenceTimer::ConfigureClocks()
 	auto slaves_map = this->slaves->GetMap();
 	for (auto it = slaves_map->begin(); it != slaves_map->end(); ++it)
 	{
-		ecrt_slave_config_dc(
-			it->second->GetConfig(),
-			it->second->GetAssignActivate(),
-			this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
-			this->GetShiftMicroseconds() * kNanosecsPerMicrosec,
-			0, 
-			0);
+        if(it->second->HasEnabledDistributedClocks())
+        {
+            ecrt_slave_config_dc(
+                it->second->GetConfig(),
+                it->second->GetAssignActivate(),
+                this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
+                this->GetShiftMicroseconds() * kNanosecsPerMicrosec,
+                0, 
+                0);
+        }
 	}
 	if(this->master && this->reference_slave)
 	{

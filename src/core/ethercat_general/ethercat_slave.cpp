@@ -179,3 +179,12 @@ void EthercatSlave::CreateSDO()
 	if (sdo_parameters) sdo_parameters->CreateRequests(this->slave_config);
 	if (sdo_telemetry) sdo_telemetry->CreateRequests(this->slave_config);	
 }	
+void EthercatSlave::WithDistributedClocks()
+{
+	this->with_dc = true;
+}
+
+bool EthercatSlave::HasEnabledDistributedClocks()
+{
+	return this->with_dc;
+}

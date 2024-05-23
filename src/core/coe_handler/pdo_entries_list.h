@@ -63,6 +63,7 @@ public:
 	 * @warning Must NOT be called by user!
 	*/
 	CoEProcessObject* GetEntry(std::string name);
+	void MergeWith(PDOEntriesList* other);
 };
 
 #endif

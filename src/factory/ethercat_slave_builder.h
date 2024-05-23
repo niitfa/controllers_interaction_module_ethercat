@@ -8,6 +8,7 @@ class EthercatSlaveBuilder
     EthercatSlaveBuilder() = delete;
 public:
     static EthercatSlave* BuildIOModule(uint16_t alias, uint16_t position);
+    static EthercatSlave* BuildKVFilterDrive(uint16_t alias, uint16_t position);
 };
 
 #endif

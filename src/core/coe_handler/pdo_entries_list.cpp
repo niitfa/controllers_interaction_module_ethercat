@@ -31,3 +31,8 @@ CoEProcessObject* PDOEntriesList::GetEntry(std::string name)
 	}
 	return nullptr;
 }
+
+void PDOEntriesList::MergeWith(PDOEntriesList* other)
+{
+	this->pdo_entries.insert(other->pdo_entries.begin(), other->pdo_entries.end());	
+}

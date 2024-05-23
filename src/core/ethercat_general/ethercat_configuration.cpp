@@ -38,6 +38,15 @@ EthercatSlavesContainer* EthercatConfiguration::GetSlaves()
 	return this->slaves;
 }
 
+EthercatSlave* EthercatConfiguration::GetSlave(std::string name)
+{
+	if(this->slaves)
+	{
+		return this->slaves->GetSlave(name);
+	}
+	return nullptr;
+}
+
 MailboxManager* EthercatConfiguration::GetMailbox()
 {
 	return this->mailbox;

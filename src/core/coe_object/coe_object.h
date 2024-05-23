@@ -87,9 +87,14 @@ public:
 	 * @brief Reads value to ethercat domain.
 	 * @warning This method calles in the begining of each cycle
 	 * in EthercatSlavesContainer::ReadProcessDataFromDomain();
-	 * @see EthercatSlavesContainer::ReadProcessDataToDomain();
+	 * @see EthercatSlavesContainer::ReadProcessDataFromDomain();
 	*/
 	void ReadValueFromFrame();	
+	/**
+	 * @brief Gets value address.
+	 * @returns Value address.
+	*/
+	int64_t* GetValueAddress();
 
 protected:
 	int64_t ec_read_le(uint8_t* pBitsArray, uint16_t bytePos, uint8_t bitPos, uint8_t qBits);

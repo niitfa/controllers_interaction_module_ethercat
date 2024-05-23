@@ -1,5 +1,5 @@
-#ifndef LONELYDRIVE_H
-#define LONELYDRIVE_H
+#ifndef LONELY_DRIVE_H
+#define LONELY_DRIVE_H
 
 #include "subsystem_content_creator.h"
 #include "subsystem_state_selector.h"
@@ -8,7 +8,6 @@
 #include "lonely_drive_telemetry.h"
 #include "lonely_drive_task_state.h"
 #include "lonely_drive_task_context.h"
-
 
 class LonelyDrive : public SubsystemContentCreator<LonelyDriveTaskContext, LonelyDriveTaskState, LonelyDrive, LonelyDriveTelemetry>
 {

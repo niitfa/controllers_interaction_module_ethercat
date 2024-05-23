@@ -14,10 +14,10 @@ void RealLonelyDrive::ModifyTelemetry()
 	if (this->drive)
 	{
 		auto master_telemetry = context->GetTelemetryExchanger()->GetMasterTelemetry();
-		auto statusword = this->drive->GetRxPDOEntry(kStatusword)->LoadValue();
+		auto statusword = this->drive->GetTxPDOEntry(kStatusword)->LoadValue();
 		
 		master_telemetry->pds_state = GetPDSStateFromStatusword(&statusword);
-		master_telemetry->drive_position_count = this->drive->GetRxPDOEntry(kActualPosition)->LoadValue();
-		master_telemetry->drive_velocity_count_per_sec 	= this->drive->GetTelemetrySDOEntry(kActualVelocity)->LoadValue();
+		master_telemetry->drive_position_count = this->drive->GetTxPDOEntry(kActualPosition)->LoadValue();
+		//master_telemetry->drive_velocity_count_per_sec 	= this->drive->GetTelemetrySDOEntry(kActualVelocity)->LoadValue();
 	}
 }
