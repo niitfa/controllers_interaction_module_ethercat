@@ -7,21 +7,31 @@ class KVFilterDriveMoveToLimiterTask : public KVFilterDriveTask,
     SubsystemStateSelector<KVFilterDriveTask, class KVFilterDriveMoveToLimiterTask, class RealKVFilterDriveMoveToLimiterTask, class EmulatedKVFilterDriveMoveToLimiterTask>
 {
 protected:
-    bool direction = 0;
-    float velocity_mm_per_sec = 0;
+    KVFilterDrive::Properties drive_props;  
+    int8_t mode_of_operation_out = 0;
+    int32_t target_velocity_c = 0;
+    float target_velocity_mm = 0; 
+    int32_t actual_velocity_drive_c = 0;
+    float actual_velocity_drive_mm = 0;
+    float actual_velocity_wire_sensor_mm = 0;
+    uint32_t frequency = 0;
 public:
-    void SetDirection(bool direction);
-
+    void SetVelocity(float velocity);
+    void SavePropertiesOf(KVFilterDrive* kv_filter_drive);
 };
 
 class RealKVFilterDriveMoveToLimiterTask : public KVFilterDriveMoveToLimiterTask
 {
-
+    int task_state = 0;
+public:
+    RealKVFilterDriveMoveToLimiterTask();
+    void StateRun() override;
 };
 
 class EmulatedKVFilterDriveMoveToLimiterTask : public KVFilterDriveMoveToLimiterTask
 {
-
+public:
+    void StateRun() override;
 };
 
 #endif

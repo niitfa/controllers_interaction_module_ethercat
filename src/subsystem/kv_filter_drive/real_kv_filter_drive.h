@@ -7,16 +7,14 @@
 
 class RealKVFilterDrive : public KVFilterDrive
 {
-    WireSensor* wire_sensor = nullptr;
-    EthercatSlave* drive = nullptr;
 public:
-    ~RealKVFilterDrive();
+    RealKVFilterDrive(uint32_t microstep_resolution, float thread_pitch);
     bool IsEmulated() override;
-    void RegisterWireSensor(WireSensor* sensor);
-    void RegisterDrive(EthercatSlave* drive);
-    void Action() override;
-    void UpdateSubsystemTelemetry() override;
+    //void Action() override;
 	void ModifyTelemetry() override;
+
+   // void RegisterWireSensor(WireSensor* sensor);
+   // void RegisterDrive(EthercatSlave* drive);
 };
 
 #endif

@@ -100,10 +100,11 @@ EthercatSlave* EthercatSlaveBuilder::BuildKVFilterDrive(uint16_t alias, uint16_t
 	sync->Create();
 
 	sdo_parameters = new SDOList();
-	sdo_parameters->AddObject(kMicrostepResolution, 0x2000, 0x00, 32, 200);
+	sdo_parameters->AddObject(kPeakCurrent, 0x2000, 0x00, 32, 2000);
+	sdo_parameters->AddObject(kMicrostepResolution, 0x2001, 0x00, 32, 200);
 	sdo_parameters->AddObject(kMaxProfileVelocity, 0x6081, 0x00, 32, 5000);
-	sdo_parameters->AddObject(kProfileAcceleration, 0x6083, 0x00, 32, 10000);
-	sdo_parameters->AddObject(kProfileDeceleration, 0x6084, 0x00, 32, 10000);
+	sdo_parameters->AddObject(kProfileAcceleration, 0x6083, 0x00, 32, 2000);
+	sdo_parameters->AddObject(kProfileDeceleration, 0x6084, 0x00, 32, 2000);
 	sdo_parameters->SetTimeout(500);
 
 	kv_filter_drive->RegisterSync(sync);

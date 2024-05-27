@@ -44,7 +44,10 @@ template<class TContext, class TState, class TSubsystem, class TTelemetry>
 void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::Action()
 {
 	this->context->SyncContextRun();
-	this->external_emulation_impacts->RunEvents();
+	if(this->IsEmulated())
+	{
+		this->external_emulation_impacts->RunEvents();
+	}
 }
 
 template<class TContext, class TState, class TSubsystem, class TTelemetry>
@@ -68,7 +71,7 @@ const TTelemetry* SubsystemContentCreator<TContext, TState, TSubsystem, TTelemet
 template<class TContext, class TState, class TSubsystem, class TTelemetry>
 void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::InsertEmulationEvent(EmulatedEventContentCleator<TContext>* event)
 {
-	if(event)
+	if(event && this->IsEmulated())
 	{
 		event->StoreContext((TContext*)this->context);
 		this->external_emulation_impacts->InsertEvent(event);
@@ -78,7 +81,7 @@ void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::InsertEm
 template<class TContext, class TState, class TSubsystem, class TTelemetry>
 void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::RemoveEmulationEvent(EmulatedEventContentCleator<TContext>* event)
 {
-	if(event)
+	if(event && this->IsEmulated())
 	{
 		this->external_emulation_impacts->RemoveEvent(event);
 	}
@@ -87,7 +90,7 @@ void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::RemoveEm
 template<class TContext, class TState, class TSubsystem, class TTelemetry>
 void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::RemoveEmulationEventUnsafe(EmulatedEventContentCleator<TContext>* event)
 {
-	if(event)
+	if(event && this->IsEmulated())
 	{
 		this->external_emulation_impacts->RemoveEventUnsafe(event);
 	}
@@ -96,7 +99,10 @@ void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::RemoveEm
 template<class TContext, class TState, class TSubsystem, class TTelemetry>
 void SubsystemContentCreator<TContext, TState, TSubsystem, TTelemetry>::ClearAllEmulationEvents()
 {
-	this->external_emulation_impacts->ClearEvents();
+	if(this->IsEmulated())
+	{
+		this->external_emulation_impacts->ClearEvents();
+	}
 }
 
 #endif

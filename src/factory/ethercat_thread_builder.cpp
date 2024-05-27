@@ -131,18 +131,31 @@ EthercatThreadBuilder::Drive_IOModule_ThreadContent EthercatThreadBuilder::Build
 	ethercat_config->RegisterSlavesContainer(ethercat_slaves);
 	ethercat_config->RegisterTimer(timer);
 
-    WireSensor* sensor = new WireSensor(100);
+    WireSensor* sensor = new WireSensor(50);
     sensor->SetFrequency(frequency_hz);
-    sensor->SetPowerSupply(24);
+    sensor->SetPowerSupply(5);
     sensor->SetVoltPerCount(10. / 27648);
-    sensor->SetOutput(10);
+    sensor->SetOutput(10.1);
     sensor->SetPositionAddress(
         io_module_cn_8033->GetTxPDOEntry(coe_object_names::kCT3168_AI0)->GetValueAddress()
     );
+    
+    /* Drive properties */
+    uint32_t microstep_resolution;
+    auto microstep_resolution_object = leadshine_dm3c_ec556_drive->GetParameterSDOEntry(coe_object_names::kMicrostepResolution);
+    if(microstep_resolution_object)
+    {
+        microstep_resolution = microstep_resolution_object->LoadValue();
+    }
+    else
+    {
+        microstep_resolution = 1000;
+    }
+    float thread_pitch = 2;
 
-    RealKVFilterDrive* kV_filter_drive = new RealKVFilterDrive();
+    RealKVFilterDrive* kV_filter_drive = new RealKVFilterDrive(microstep_resolution, thread_pitch);
     kV_filter_drive->RegisterWireSensor(sensor);
-    kV_filter_drive->RegisterDrive(io_module_cn_8033);
+    kV_filter_drive->RegisterDrive(leadshine_dm3c_ec556_drive);
     
     UnspecifiedDevice* device = new UnspecifiedDevice();
     device->RegisterSubsystem(kV_filter_drive);

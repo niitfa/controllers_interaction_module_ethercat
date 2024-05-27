@@ -18,6 +18,7 @@ namespace coe_object_names
     const std::string kProfileDeceleration = "Profile deceleration";
     const std::string kActualVelocity = "Actual velocity";
     const std::string kMicrostepResolution = "Microstep resolution";
+	const std::string kPeakCurrent = "Peak current";
 
     /* IO Module ODOT CT-3168 */
  	const std::string kCT3168_AI0 = "AI#0 CT-3168";

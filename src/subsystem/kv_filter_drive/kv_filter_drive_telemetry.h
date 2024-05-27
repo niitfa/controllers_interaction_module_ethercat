@@ -6,6 +6,7 @@
 struct KVFilterDriveTelemetry
 {
     int32_t position_count = 0;
+    float wire_sensor_velocity_mm = 0;
 };
 
 #endif

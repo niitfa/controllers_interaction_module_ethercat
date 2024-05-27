@@ -4,23 +4,20 @@
 WireSensor::WireSensor(uint16_t averaging_level)
 {
     this->averaging_level = std::max((uint16_t)1, averaging_level);
-    
-    this->last_positions = std::vector<int64_t>(averaging_level + 1, 0);
-    this->it_current = last_positions.begin();
-    this->it_previous = it_current + 1;
+    SMA_position = new SimpleMovingAverageHandler<float>(averaging_level);
+}
+
+WireSensor::~WireSensor()
+{
+    delete SMA_position;
 }
 
 void WireSensor::Update()
 {
-    *it_current = *p_position_counts; 
-
-    velocity_counts_per_sec = (float)(*it_current - *it_previous) / averaging_level * frequency;
-
-    std::cout << "WireSensor::Update(): Wire sensor val: "
-     << GetPositionCounts() << std::endl;
-
-    it_current + 1  == last_positions.end() ? it_current = last_positions.begin() : ++it_current;
-    it_previous + 1 == last_positions.end() ? it_previous = last_positions.begin() : ++it_previous;
+    float previous_sma_position = SMA_position->GetMovingAverage();
+    SMA_position->PlaceNextValue((float)GetPositionCounts());
+    velocity_counts_per_sec = (SMA_position->GetMovingAverage() - previous_sma_position) * frequency; 
+    //std::cout << "WireSensor::Update(): val = " << GetPositionMillimeters() << std::endl;
 }
 
 int64_t WireSensor::GetPositionCounts()
@@ -42,12 +39,12 @@ int64_t WireSensor::GetVelocityCountsPerSec()
 
 float WireSensor::GetPositionMillimeters()
 {
-    return GetPositionCounts() * volt_per_count / output_mV_per_V_per_mm / power_supply_V * 1000;
+    return GetPositionCounts() * volt_per_count * kMillivoltsPerVolt / output_mV_per_V_per_mm / power_supply_V;
 }
 
 float WireSensor::GetVelociyMillimetersPerSec()
 {
-    return GetVelocityCountsPerSec() * volt_per_count / output_mV_per_V_per_mm / power_supply_V * 1000;
+    return GetVelocityCountsPerSec() * volt_per_count * kMillivoltsPerVolt / output_mV_per_V_per_mm / power_supply_V;
 }
 
 void WireSensor::SetPositionAddress(int64_t* address)

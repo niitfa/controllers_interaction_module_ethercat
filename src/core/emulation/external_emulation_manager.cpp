@@ -2,11 +2,13 @@
 
 void ExternalEmulationManager::RunEvents()
 {
+
 	if(this->synchronizer.Trylock())
 	{
 		/* Run */
 		for (auto it = emulated_events.begin(); it != emulated_events.end(); ++it)
 		{
+			std::cout << emulated_events.size() << std::endl;;
 			it->first->RunEvent();
 		}
 
