@@ -50,16 +50,22 @@ void EthercatThreadManager::Handler()
 {
 	if (this->device)
 	{
+		//Stopwatch stopwatch;
 		auto ethercat_config = device->GetEthercatConfig();
 		ethercat_config->Initialize();
 		is_initialized.store(true);
 
 		while (!is_stop_forced.load())
 		{
+			//stopwatch.Reset();
 			ethercat_config->GetTimer()->Sleep();
+			//stopwatch.Update();
+			//std::cout << "EthercatThreadManager::Handler(): " << stopwatch.Nanoseconds() <<std::endl;	
+
 			ethercat_config->PreProcessingAction();
 			device->Action();
 			ethercat_config->PostProcessingAction();
+
 		}
 		ethercat_config->Release();
 	}

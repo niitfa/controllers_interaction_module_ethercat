@@ -1,18 +1,18 @@
-#include "real_kv_filter_drive.h"
+#include "real_kv_detector_drive.h"
 #include "coe_object_names.h"
-#include "coe_drive_state_handler.h"
+#include "ethercat_slave_names.h"
 
 using namespace coe_object_names;
 
-RealKVFilterDrive::RealKVFilterDrive(uint32_t microstep_resolution, float thread_pitch) : KVFilterDrive(microstep_resolution, thread_pitch)
+RealKVDetectorDrive::RealKVDetectorDrive(uint32_t microstep_resolution, float thread_pitch) : KVDetectorDrive(microstep_resolution, thread_pitch)
 {}
 
-bool RealKVFilterDrive::IsEmulated()
+bool RealKVDetectorDrive::IsEmulated()
 {
     return false;
 }
 
-void RealKVFilterDrive::ModifyTelemetry()
+void RealKVDetectorDrive::ModifyTelemetry()
 {
     auto telemetry = this->context->GetTelemetryExchanger()->GetMasterTelemetry();
     telemetry->drive_position_pulse = this->drive->GetTxPDOEntry(kActualPosition)->LoadValue();
@@ -24,4 +24,9 @@ void RealKVFilterDrive::ModifyTelemetry()
     telemetry->drive_velocity_mm_per_sec = this->drive->GetTxPDOEntry(kActualVelocity)->LoadValue() * props.thread_pitch / props.microstep_resolution;
     telemetry->wire_sensor_velocity_pulse_per_sec = this->wire_sensor->GetVelocityCountsPerSec();
     telemetry->wire_sensor_velocity_mm_per_sec = this->wire_sensor->GetVelociyMillimetersPerSec();
+
+    /*auto sync0_ct = this->context->GetSubsystem()->GetEthercatConfig()->
+        GetSlave(ethercat_slave_names::kIOModuleName)->GetTelemetrySDOEntry("Sync0 cycle time")->LoadValue();
+    std::cout << "RealKVDetectorDrive::ModifyTelemetry(): sync0_ct = " << sync0_ct << std::endl; */
+
 }

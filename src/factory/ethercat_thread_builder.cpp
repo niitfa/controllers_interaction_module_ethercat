@@ -3,6 +3,7 @@
 #include "ethercat_slave_builder.h"
 #include "ethercat_slaves_container.h"
 #include "dc_master_to_reference_timer.h"
+#include "dc_reference_to_master_timer.h"
 #include "simple_timer.h"
 #include "io_module_cn8033.h"
 #include "real_kv_filter_drive.h"
@@ -172,4 +173,111 @@ EthercatThreadBuilder::Drive_IOModule_ThreadContent EthercatThreadBuilder::Build
     thread_content.kv_drive = kV_filter_drive;
 
     return thread_content;
+}
+
+EthercatThreadBuilder::KVFiltDrive_IOModule_KVDetDrive_ThreadContent EthercatThreadBuilder::BuildThread_KVFiltDrive_IOModule_KVDetDrive(int master_index)
+{
+    uint32_t frequency_hz = 1000;
+    uint32_t dc_shift_us = 500;
+
+    EthercatMaster* ethercat_master = new EthercatMaster();
+	ethercat_master->SetMasterIndex(master_index);
+
+
+    EthercatSlave* kv_filter_drive = EthercatSlaveBuilder::BuildKVFilterDrive(0, 1);
+    kv_filter_drive->SetAssignActivate(0x0300); 
+    kv_filter_drive->WithDistributedClocks();
+    EthercatSlave* io_module_cn_8033 = EthercatSlaveBuilder::BuildIOModule(0, 2);
+    //io_module_cn_8033->SetAssignActivate(0x0100); 
+    //io_module_cn_8033->WithDistributedClocks(); 
+    EthercatSlave* kv_detector_drive = EthercatSlaveBuilder::BuildKVDetectorDrive(0, 0);
+    kv_detector_drive->SetAssignActivate(0x0300); 
+    kv_detector_drive->WithDistributedClocks(); 
+
+    EthercatSlavesContainer* ethercat_slaves = new EthercatSlavesContainer();
+    ethercat_slaves->RegisterSlave(kv_filter_drive);
+    ethercat_slaves->RegisterSlave(io_module_cn_8033);
+    ethercat_slaves->RegisterSlave(kv_detector_drive);
+
+	//DCMasterToReferenceTimer* timer = new DCMasterToReferenceTimer();
+    DCReferenceToMasterTimer* timer = new DCReferenceToMasterTimer();
+	timer->SetFrequency(frequency_hz);
+	timer->SetShiftMicroseconds(dc_shift_us);
+	timer->SetMaster(ethercat_master);
+	timer->SetSlavesClocks(ethercat_slaves);
+	//timer->SetReferenceSlaveClock(kv_detector_drive);
+
+    EthercatConfiguration* ethercat_config = new EthercatConfiguration();
+    ethercat_config->RegisterMaster(ethercat_master);
+	ethercat_config->RegisterSlavesContainer(ethercat_slaves);
+	ethercat_config->RegisterTimer(timer);
+
+    WireSensor* kv_filter_sensor = new WireSensor(50);
+    kv_filter_sensor->SetFrequency(frequency_hz);
+    kv_filter_sensor->SetPowerSupply(5);
+    kv_filter_sensor->SetVoltPerCount(10. / 27648);
+    kv_filter_sensor->SetOutput(10.1);
+    kv_filter_sensor->SetPositionAddress(
+        io_module_cn_8033->GetTxPDOEntry(coe_object_names::kCT3168_AI0)->GetValueAddress()
+    );
+
+    WireSensor* kv_detector_sensor = new WireSensor(500);
+    kv_detector_sensor->SetFrequency(frequency_hz);
+    kv_detector_sensor->SetPowerSupply(24);
+    kv_detector_sensor->SetVoltPerCount(10. / 27648);
+    kv_detector_sensor->SetOutput(3.5);
+    kv_detector_sensor->SetPositionAddress(
+        io_module_cn_8033->GetTxPDOEntry(coe_object_names::kCT3168_AI1)->GetValueAddress()
+    );
+    
+    /* kV filter properties */
+    uint32_t microstep_resolution;
+    float thread_pitch;
+    auto microstep_resolution_object = kv_filter_drive->GetParameterSDOEntry(coe_object_names::kMicrostepResolution);
+    if(microstep_resolution_object)
+    {
+        microstep_resolution = microstep_resolution_object->LoadValue();
+    }
+    else
+    {
+        microstep_resolution = 1000;
+    }
+    thread_pitch = 2;
+
+    RealKVFilterDrive* kV_filter = new RealKVFilterDrive(microstep_resolution, thread_pitch);
+    kV_filter->RegisterWireSensor(kv_filter_sensor);
+    kV_filter->RegisterDrive(kv_filter_drive);
+
+    /* kV detector properties */
+    microstep_resolution_object = kv_detector_drive->GetParameterSDOEntry(coe_object_names::kMicrostepResolution);
+    if(microstep_resolution_object)
+    {
+        microstep_resolution = microstep_resolution_object->LoadValue();
+    }
+    else
+    {
+        microstep_resolution = 1000;
+    }
+    thread_pitch = 2.5;
+
+    RealKVDetectorDrive* kV_detector = new RealKVDetectorDrive(microstep_resolution, thread_pitch);
+    kV_detector->RegisterWireSensor(kv_detector_sensor);
+    kV_detector->RegisterDrive(kv_detector_drive);
+    
+    UnspecifiedDevice* device = new UnspecifiedDevice();
+    device->RegisterSubsystem(kV_filter);
+    device->RegisterSubsystem(kV_detector);
+    device->RegisterEthercatConfig(ethercat_config);
+
+    EthercatThreadManager* thread = new EthercatThreadManager(); 
+    thread->RegisterDevice(device);
+    thread->SetCPUs({13});   
+    
+    KVFiltDrive_IOModule_KVDetDrive_ThreadContent thread_content;
+    thread_content.thread = thread;
+    thread_content.device = device;
+    thread_content.kv_filter_drive = kV_filter; 
+    thread_content.kv_detector_drive = kV_detector; 
+
+    return thread_content;      
 }

@@ -1,19 +1,19 @@
-#ifndef KV_FILTER_DRIVE_H
-#define KV_FILTER_DRIVE_H
+#ifndef KV_DETECTOR_DRIVE_H
+#define KV_DETECTOR_DRIVE_H
 
 #include "debug_logger.h"
 
 #include "subsystem_content_creator.h"
 #include "subsystem_state_selector.h"
 
-#include "kv_filter_drive_telemetry.h"
-#include "kv_filter_drive_task.h"
-#include "kv_filter_drive_context.h"
+#include "kv_detector_drive_telemetry.h"
+#include "kv_detector_drive_task.h"
+#include "kv_detector_drive_context.h"
 
 #include "wire_sensor.h"
 #include "ethercat_slave.h"
 
-class KVFilterDrive : public SubsystemContentCreator<KVFilterDriveContext, KVFilterDriveTask, KVFilterDrive, KVFilterDriveTelemetry>
+class KVDetectorDrive : public SubsystemContentCreator<KVDetectorDriveContext, KVDetectorDriveTask, KVDetectorDrive, KVDetectorDriveTelemetry>
 {
 public:
     struct Properties
@@ -25,11 +25,11 @@ protected:
     Properties props;
     WireSensor* wire_sensor = nullptr;
     EthercatSlave* drive = nullptr;
-    //DebugLogger<float> logger; // debug!!
+    DebugLogger<float> logger; // debug!!
 public:
-    KVFilterDrive() = delete;
-    KVFilterDrive(uint32_t microstep_resolution, float thread_pitch);
-    ~KVFilterDrive();
+    KVDetectorDrive() = delete;
+    KVDetectorDrive(uint32_t microstep_resolution, float thread_pitch);
+    ~KVDetectorDrive();
     void Action() override;
     Properties GetProperties();
     void RegisterWireSensor(WireSensor* sensor);

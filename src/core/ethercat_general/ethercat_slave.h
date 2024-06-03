@@ -82,6 +82,7 @@ protected:
 	SDOList* sdo_parameters = nullptr;
 	SDOList* sdo_telemetry = nullptr;
 	uint32_t assign_activate = 0;
+	std::vector<CoEServiceObject*> initial_sdos;
 
 	bool with_dc = false;
 public:
@@ -247,6 +248,11 @@ public:
 	 * @brief Returns current DC permission state. 
 	*/
 	bool HasEnabledDistributedClocks();
+	/**
+	 * @brief Adds SDO entry which will be configured before real-time context.
+	 * @param[in] coe_object Required CoE object.
+	*/
+	void AddInitialSDOEntry(std::string name, uint16_t index, uint8_t subindex, uint16_t size, int64_t value);
 };
 
 #endif

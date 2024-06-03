@@ -7,7 +7,7 @@ class EmulatedKVFilterDrive : public KVFilterDrive
 {
 public:
     bool IsEmulated() override;
-
+    void ModifyTelemetry() override;
 };
 
 #endif

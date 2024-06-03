@@ -4,3 +4,8 @@ bool EmulatedKVFilterDrive::IsEmulated()
 {
     return true;
 }
+
+void EmulatedKVFilterDrive::ModifyTelemetry()
+{
+
+}

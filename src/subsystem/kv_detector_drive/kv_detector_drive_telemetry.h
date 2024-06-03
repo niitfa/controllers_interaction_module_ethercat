@@ -1,9 +1,9 @@
-#ifndef KV_FILTER_DRIVE_TELEMETRY_H
-#define KV_FILTER_DRIVE_TELEMETRY_H
+#ifndef KV_DETECTOR_DRIVE_TELEMETRY_H
+#define KV_DETECTOR_DRIVE_TELEMETRY_H
 
 #include <stdint.h>
 
-struct KVFilterDriveTelemetry
+struct KVDetectorDriveTelemetry
 {
     int32_t drive_position_pulse = 0;    
     int32_t drive_velocity_pulse_per_sec = 0;

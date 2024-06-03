@@ -6,6 +6,7 @@
 
 #include "io_module_cn8033.h"
 #include "real_kv_filter_drive.h"
+#include "real_kv_detector_drive.h"
 
 #include "real_lonely_drive.h"
 
@@ -51,6 +52,20 @@ public:
 
    static Drive_IOModule_ThreadContent BuildThread_Drive_IOModule(int master_index);
 
+
+    /*
+        Slave 0 - Leadshine DM3C-EC556 CoE Drive (kV-filter)  
+        Slave 1 - IO Module ODOT CN-8033 + CT-3168 + CT-632F 
+        Slave 2 - Leadshine DM3C-EC556 CoE Drive (kV-detector)
+    */
+    struct KVFiltDrive_IOModule_KVDetDrive_ThreadContent
+    {
+        EthercatThreadManager* thread = nullptr;
+        UnspecifiedDevice* device = nullptr;
+        RealKVFilterDrive* kv_filter_drive = nullptr; 
+        RealKVDetectorDrive* kv_detector_drive = nullptr;       
+    };
+    static KVFiltDrive_IOModule_KVDetDrive_ThreadContent BuildThread_KVFiltDrive_IOModule_KVDetDrive(int master_index);
 
     
 };

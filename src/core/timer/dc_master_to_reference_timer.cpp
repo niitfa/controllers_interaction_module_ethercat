@@ -37,9 +37,14 @@ void DCMasterToReferenceTimer::Sleep()
 
 	    int64_t dcTime_curr_ns = SystemTimeNanoseconds();
 	    int64_t cycle_diff_ns = TimespecToNanoseconds(&dcTime_ref) - dcTime_curr_ns;
-
+        /*std::cout
+                 << "dcTime_curr_ns: " << dcTime_curr_ns % kNanosecsPerSec
+                 << "\tTimespecToNanoseconds(&dcTime_ref): " << TimespecToNanoseconds(&dcTime_ref) % kNanosecsPerSec
+                 << "\tcycle_diff_ns: " << cycle_diff_ns % kNanosecsPerSec << std::endl; */
+               
 	    if(cycle_diff_ns <= 0)
-	    {
+	    {   
+            //std::cout << "! cycle_diff_ns: " << cycle_diff_ns % kNanosecsPerSec << std::endl;;
 	    	AddNanosecondsToTimespec(period_nanoseconds, &dcTime_ref);
 			wake_up_flag = true;	
 	    }
@@ -53,20 +58,27 @@ void DCMasterToReferenceTimer::ConfigureClocks()
 	{
         if(it->second->HasEnabledDistributedClocks())
         {
+            //std::cout << "DCMasterToReferenceTimer::ConfigureClocks(): name = " << it->second->GetName() << " " << it->second->GetConfig() << std::endl;
             ecrt_slave_config_dc(
                 it->second->GetConfig(),
                 it->second->GetAssignActivate(),
                 this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
                 this->GetShiftMicroseconds() * kNanosecsPerMicrosec,
-                0, 
+                0,//this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
                 0);
         }
 	}
 	if(this->master && this->reference_slave)
 	{
+        ec_slave_config_t* sc_ref = nullptr; 
+        if(this->reference_slave)
+        {
+            sc_ref = this->reference_slave->GetConfig();
+        }
+        //std::cout << "DCMasterToReferenceTimer::ConfigureClocks(): ref name = " << reference_slave->GetName() << " " << reference_slave->GetConfig() << std::endl;
 		if(ecrt_master_select_reference_clock(
 			this->master->GetRequest(),
-			this->reference_slave->GetConfig()))
+			sc_ref))
 		{
 			std::cerr << ">>> Ethercat: failed to select reference clock.\n";
 		}

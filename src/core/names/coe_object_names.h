@@ -48,8 +48,6 @@ namespace coe_object_names
  	const std::string kCT632F_DO5 = "DO#5 CT-623F";        
  	const std::string kCT632F_DO6 = "DO#6 CT-623F";  
  	const std::string kCT632F_DO7 = "DO#7 CT-623F";      
-
-
 }
 
 #endif

@@ -6,6 +6,11 @@ EthercatSlave::~EthercatSlave()
 	if (sync_info) delete sync_info;
 	if (sdo_parameters) delete sdo_parameters;
 	if (sdo_telemetry) delete sdo_telemetry;
+	
+	for (auto it = initial_sdos.begin(); it != initial_sdos.end(); ++it)
+	{
+		if(*it) delete *it;
+	}
 }
 
 ec_slave_config_t* EthercatSlave::GetConfig()
@@ -178,6 +183,27 @@ void EthercatSlave::CreateSDO()
 {
 	if (sdo_parameters) sdo_parameters->CreateRequests(this->slave_config);
 	if (sdo_telemetry) sdo_telemetry->CreateRequests(this->slave_config);	
+	/* Config all special sdos */
+	for(auto sdo : initial_sdos)
+	{
+		int64_t value = sdo->LoadValue(); 
+		//ecrt_slave_config_sdo(slave_config, sdo->GetIndex(), sdo->GetSubindex(), (uint8_t*)value, sdo->GetSizeBit());
+		switch (sdo->GetSizeBit())
+		{
+		case 8:
+			ecrt_slave_config_sdo8(slave_config, sdo->GetIndex(), sdo->GetSubindex(), value);
+			break;
+		case 16:
+			ecrt_slave_config_sdo16(slave_config, sdo->GetIndex(), sdo->GetSubindex(), value);
+			break;
+		case 32:
+			ecrt_slave_config_sdo32(slave_config, sdo->GetIndex(), sdo->GetSubindex(), value);
+			break;
+		default:
+			ecrt_slave_config_sdo32(slave_config, sdo->GetIndex(), sdo->GetSubindex(), value);
+			break;
+		}
+	}
 }	
 void EthercatSlave::WithDistributedClocks()
 {
@@ -187,4 +213,11 @@ void EthercatSlave::WithDistributedClocks()
 bool EthercatSlave::HasEnabledDistributedClocks()
 {
 	return this->with_dc;
+}
+
+void EthercatSlave::AddInitialSDOEntry(std::string name, uint16_t index, uint8_t subindex, uint16_t size, int64_t value)
+{
+	CoEServiceObject* sdo_entry = new CoEServiceObject(name, index, subindex, size);
+	sdo_entry->StoreValue(value);
+	this->initial_sdos.push_back(sdo_entry);
 }

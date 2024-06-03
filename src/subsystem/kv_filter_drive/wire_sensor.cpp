@@ -17,7 +17,7 @@ void WireSensor::Update()
     float previous_sma_position = SMA_position->GetMovingAverage();
     SMA_position->PlaceNextValue((float)GetPositionCounts());
     velocity_counts_per_sec = (SMA_position->GetMovingAverage() - previous_sma_position) * frequency; 
-    //std::cout << "WireSensor::Update(): val = " << GetPositionMillimeters() << std::endl;
+    //std::cout << "WireSensor::Update(): val = " << GetVelociyMillimetersPerSec() << std::endl;
 }
 
 int64_t WireSensor::GetPositionCounts()
