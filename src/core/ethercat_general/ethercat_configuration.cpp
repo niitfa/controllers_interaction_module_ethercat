@@ -2,6 +2,8 @@
 #include "mailbox_reading_state.h"
 #include "mailbox_writing_state.h"
 
+#include <thread>
+
 EthercatConfiguration::EthercatConfiguration()
 {
 	domain = new EthercatDomain();
@@ -74,10 +76,14 @@ void EthercatConfiguration::Initialize()
 		master->Request();
 		slaves->ConfigureAllSlaves(master);
 		domain->AddDefaultDomain(master, slaves);
-		timer->ConfigureClocks();	
-		master->Activate();
-		domain->SetProcessData(slaves);
+		timer->ConfigureClocks();
 		this->PrepareMailboxTasks();
+		/* Setting master app time */
+		ecrt_master_application_time(master->GetRequest(), timer->GetCurrentTime());
+
+		/* Activate master */	
+		master->Activate();
+		domain->SetProcessData(slaves);	
 	}
 }
 
@@ -95,7 +101,7 @@ void EthercatConfiguration::PreProcessingAction()
 	{
 		master->ReceiveProcessData();
 
-		ecrt_domain_state(domain->GetRequest(), &(GetMasterTelemetry()->domain_state));
+		ecrt_domain_state(domain->GetRequest(), &(GetMasterTelemetry()->domain_state)); // telemetry
 
 		domain->Process();
 		slaves->ReadProcessDataFromDomain();

@@ -41,7 +41,7 @@ void KVFilterDrive::Action()
 
     std::string slave_name = ethercat_slave_names::kKVFilterDriveName;
 
-    std::cout << "KVFilterDrive::Action(): " 
+    /*std::cout << "KVFilterDrive::Action(): " 
         << "0x1c32:01 = "<< this->GetEthercatConfig()->GetSlave(slave_name)->GetTelemetrySDOEntry("Synchronization type 0")->LoadValue() + 0<< "\t"
         << "0x1c32:02 = "<< this->GetEthercatConfig()->GetSlave(slave_name)->GetTelemetrySDOEntry("Cycle time 0")->LoadValue() + 0<< "\t"
         << "0x1c32:03 = "<< this->GetEthercatConfig()->GetSlave(slave_name)->GetTelemetrySDOEntry("Output shift time 0")->LoadValue() + 0<< "\t"
@@ -52,7 +52,7 @@ void KVFilterDrive::Action()
         << "0x1c33:03 = "<< this->GetEthercatConfig()->GetSlave(slave_name)->GetTelemetrySDOEntry("Input shift time 1")->LoadValue() + 0<< "\t"
         << "0x1c33:06 = "<< this->GetEthercatConfig()->GetSlave(slave_name)->GetTelemetrySDOEntry("Calc and copy time 1")->LoadValue() + 0<< "\t"
         << "0x1c33:09 = "<< this->GetEthercatConfig()->GetSlave(slave_name)->GetTelemetrySDOEntry("Delay time 1")->LoadValue() + 0<< "\t";
-    std::cout << std::endl;
+    std::cout << std::endl; */
 
     if(this->wire_sensor) wire_sensor->Update();
     SubsystemContentCreator<KVFilterDriveContext, KVFilterDriveTask, KVFilterDrive, KVFilterDriveTelemetry>::Action(); 

@@ -31,7 +31,7 @@ void DCMasterToReferenceTimer::Sleep()
 		if(!is_timer_launched) 
 		{
 	        clock_gettime(CLOCK_REALTIME, &dcTime_ref);
-	        AddNanosecondsToTimespec(period_nanoseconds, &dcTime_ref);
+	        AddNanosecondsToTimespec(10*period_nanoseconds, &dcTime_ref);
 	        is_timer_launched = true;
 	    }
 

@@ -48,7 +48,7 @@ void DCReferenceToMasterTimer::ConfigureClocks()
                 it->second->GetAssignActivate(),
                 this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
                 this->GetShiftMicroseconds() * kNanosecsPerMicrosec,
-                this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
+                0,//this->EthercatTimer::GetPeriodMicroseconds() * kNanosecsPerMicrosec, 
                 0);
         }
 	}
@@ -74,6 +74,14 @@ void DCReferenceToMasterTimer::SyncDistributedClocks(EthercatMaster* master)
     this->dc_time_ns = SystemTimeNanoseconds();
     ecrt_master_application_time(master->GetRequest(), dc_time_ns);
     ecrt_master_sync_reference_clock(master->GetRequest());
+
+    /* Additional */
+
+    ecrt_master_sync_slave_clocks(master->GetRequest());
+    //ecrt_master_sync_monitor_queue(master->GetRequest());
+    //uint32_t res = ecrt_master_sync_monitor_process(master->GetRequest());
+    //std::cout << "DCReferenceToMasterTimer::SyncDistributedClocks: res = " << res << std::endl;
+
 }
 
 int64_t DCReferenceToMasterTimer::SystemTimeNanoseconds()

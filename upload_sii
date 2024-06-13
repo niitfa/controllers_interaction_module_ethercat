@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ODOT_CN_8033_POSITION=1
+ODOT_CN_8033_POSITION=2
 ODOT_CN_8033_ESI="esi/odot_cn_8033_esi.bin"
 
 ethercatsw start

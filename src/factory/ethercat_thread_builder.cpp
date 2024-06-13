@@ -199,8 +199,8 @@ EthercatThreadBuilder::KVFiltDrive_IOModule_KVDetDrive_ThreadContent EthercatThr
     ethercat_slaves->RegisterSlave(io_module_cn_8033);
     ethercat_slaves->RegisterSlave(kv_detector_drive);
 
-	//DCMasterToReferenceTimer* timer = new DCMasterToReferenceTimer();
-    DCReferenceToMasterTimer* timer = new DCReferenceToMasterTimer();
+	DCMasterToReferenceTimer* timer = new DCMasterToReferenceTimer();
+    //DCReferenceToMasterTimer* timer = new DCReferenceToMasterTimer();
 	timer->SetFrequency(frequency_hz);
 	timer->SetShiftMicroseconds(dc_shift_us);
 	timer->SetMaster(ethercat_master);
