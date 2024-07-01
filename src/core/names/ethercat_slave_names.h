@@ -11,6 +11,10 @@ namespace ethercat_slave_names
     const std::string kIOModuleName = "IO Module CN-8033";
     const std::string kKVFilterDriveName = "kV filter drive";
     const std::string kKVDetectorDriveName = "kV detector drive";
+
+    const std::string kGantryDriveNameMKLKT = "mKLKT gantry drive";
+    const std::string kKVDetectorDriveNameMKLKT = "mKLKT kV detector drive";
+    const std::string kKVFilterDriveNameMKLKT = "mKLKT kV filter drive";
 }
 
 #endif

@@ -14,11 +14,13 @@ namespace coe_object_names
     const std::string kActualPosition = "Actual position";
     const std::string kMaxProfileVelocity = "Max profile velocity";
     const std::string kProfileVelocity = "Profile velocity";
+	const std::string kTargetVelocity = "Target velocity";
     const std::string kProfileAcceleration = "Profile acceleration";
     const std::string kProfileDeceleration = "Profile deceleration";
     const std::string kActualVelocity = "Actual velocity";
     const std::string kMicrostepResolution = "Microstep resolution";
 	const std::string kPeakCurrent = "Peak current";
+	const std::string kDigitalInputs = "Digital inputs";
 
     /* IO Module ODOT CT-3168 */
  	const std::string kCT3168_AI0 = "AI#0 CT-3168";
