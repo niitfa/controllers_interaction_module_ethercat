@@ -34,10 +34,6 @@ void EthercatThreadManager::StartThread()
 				CPU_SET(cpu, &cpuset);
 			}
 			int rc = pthread_setaffinity_np(thrd.native_handle(), sizeof(cpuset), &cpuset);
-
-			//sched_param param;
-			//param.sched_priority = 20;
-			//pthread_setschedparam(thrd.native_handle(), SCHED_FIFO, &param);
 		}
 		thrd.detach();
 		WaitForInit();
@@ -59,8 +55,6 @@ void EthercatThreadManager::Handler()
 		auto ethercat_config = device->GetEthercatConfig();
 		ethercat_config->Initialize();
 		is_initialized.store(true);
-		/* App time*/
-		ecrt_master_application_time(ethercat_config->GetMaster()->GetRequest(), ethercat_config->GetTimer()->GetCurrentTime());
 		while (!is_stop_forced.load())
 		{
 			//stopwatch.Reset();
