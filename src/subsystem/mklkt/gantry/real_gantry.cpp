@@ -17,5 +17,5 @@ void RealGantry::ModifyTelemetry()
 {
 	auto master_telemetry = context->GetTelemetryExchanger()->GetMasterTelemetry();
 	
-	master_telemetry->gantry_position_count 		= this->drive->GetTxPDOEntry(kActualPosition)->LoadValue();
+	master_telemetry->gantry_position_count = this->drive->GetTxPDOEntry(kActualPosition)->LoadValue();
 }

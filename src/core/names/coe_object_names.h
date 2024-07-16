@@ -21,6 +21,7 @@ namespace coe_object_names
     const std::string kMicrostepResolution = "Microstep resolution";
 	const std::string kPeakCurrent = "Peak current";
 	const std::string kDigitalInputs = "Digital inputs";
+	const std::string kHomingMethod = "Digital inputs";
 
     /* IO Module ODOT CT-3168 */
  	const std::string kCT3168_AI0 = "AI#0 CT-3168";
@@ -49,7 +50,26 @@ namespace coe_object_names
     const std::string kCT632F_DO4 = "DO#4 CT-623F";  
  	const std::string kCT632F_DO5 = "DO#5 CT-623F";        
  	const std::string kCT632F_DO6 = "DO#6 CT-623F";  
- 	const std::string kCT632F_DO7 = "DO#7 CT-623F";      
+ 	const std::string kCT632F_DO7 = "DO#7 CT-623F";
+
+	/* IO Module ODOT CT-5122 */
+	const std::string kCT5122_CH0_IDLE = "CH#0 Data Line Status";
+	const std::string kCT5122_CH0_Data = "CH#0 Input Data"; 
+	const std::string kCT5122_CH0_Enc_UP = "CH#0 Encoder Count UP Flag";
+	const std::string kCT5122_CH0_Enc_DOWN = "CH#0 Encoder Count DOWN Flag";
+
+	const std::string kCT5122_CH1_IDLE = "CH#1 Data Line Status";
+	const std::string kCT5122_CH1_Data = "CH#1 Input Data"; 
+	const std::string kCT5122_CH1_Enc_UP = "CH#1 Encoder Count UP Flag";
+	const std::string kCT5122_CH1_Enc_DOWN = "CH#1 Encoder Count DOWN Flag";
+
+	const std::string kCT5122_CH0_Counter_Val = "CH#0 Counter Value";
+	const std::string kCT5122_CH0_Capture_Val = "CH#0 Capture Value"; 
+	const std::string kCT5122_CH1_Counter_Val = "CH#1 Counter Value";
+	const std::string kCT5122_CH1_Capture_Val = "CH#1 Capture Value";
+
+	const std::string kCT5122_CH0_Output_Control = "CH#0 Output Control";
+	const std::string kCT5122_CH1_Output_Control = "CH#1 Output Control";
 }
 
 #endif

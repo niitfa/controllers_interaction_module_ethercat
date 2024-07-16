@@ -5,7 +5,7 @@
 #include "common_move_drive_task.h"
 
 class GantryMoveTask : public GantryTaskState,
-    public SubsystemStateSelector<Gantry, class GantryMoveTask, class RealGantryMoveTask, class EmlatedGantryMoveTask>
+    public SubsystemStateSelector<Gantry, class GantryMoveTask, class RealGantryMoveTask, class EmulatedGantryMoveTask>
 {
 protected:
     float target_position_deg = 0;
