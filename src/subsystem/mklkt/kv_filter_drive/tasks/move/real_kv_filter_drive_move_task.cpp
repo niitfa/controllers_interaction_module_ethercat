@@ -3,13 +3,13 @@
 void RealKVFilterDriveMoveTask::SetTargetPosition(float position)
 {
     task.SetTargetPosition(position);
-    this->target_position_deg = position;
+    this->target_position_mm = position;
 }
 
 void RealKVFilterDriveMoveTask::SetVelocity(float velocity)
 {
     task.SetTargetVelocity(velocity);
-    this->target_velocity_deg_per_sec = velocity;
+    this->target_velocity_mm_per_sec = velocity;
 }
 
 void RealKVFilterDriveMoveTask::StateRun()

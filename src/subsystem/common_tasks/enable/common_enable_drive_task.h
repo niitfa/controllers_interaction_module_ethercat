@@ -43,6 +43,7 @@ void CommonEnableDriveTask<TContext>::RunTask(TContext* context)
 
 	if(psd_state == coe_drive_state_handler::kStateOperationEnabled)
 	{
+		//std::cout << "CommonEnableDriveTask<TContext>::RunTask(TContext* context): ENABLED\n";
 		context->TransitToNext();
 	}   
 }

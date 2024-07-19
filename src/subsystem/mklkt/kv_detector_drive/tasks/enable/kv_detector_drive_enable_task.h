@@ -14,7 +14,10 @@ class KVDetectorDriveEnableTask : public KVDetectorDriveTask,
 
 class EmulatedKVDetectorDriveEnableTask : public KVDetectorDriveEnableTask
 {
+	const int kEnablingDelayCycles = 40;
+	int delay_counter = 0;
 public:
+	EmulatedKVDetectorDriveEnableTask();
 	void StateRun() override;
 };
 

@@ -5,11 +5,11 @@
 #include "common_move_drive_task.h"
 
 class KVDetectorDriveMoveTask : public KVDetectorDriveTask,
-    public SubsystemStateSelector<KVDetectorDrive, class KVDetectorDriveMoveTask, class RealKVDetectorDriveMoveTask, class EmlatedKVDetectorDriveMoveTask>
+    public SubsystemStateSelector<KVDetectorDrive, class KVDetectorDriveMoveTask, class RealKVDetectorDriveMoveTask, class EmulatedKVDetectorDriveMoveTask>
 {
 protected:
-    float target_position_deg = 0;
-    float target_velocity_deg_per_sec = 0;
+    float target_position_mm = 0;
+    float target_velocity_mm_per_sec = 0;
 public:
     virtual void SetTargetPosition(float position);
     virtual void SetVelocity(float velocity);

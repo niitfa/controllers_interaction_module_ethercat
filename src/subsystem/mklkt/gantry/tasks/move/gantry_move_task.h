@@ -8,6 +8,8 @@ class GantryMoveTask : public GantryTaskState,
     public SubsystemStateSelector<Gantry, class GantryMoveTask, class RealGantryMoveTask, class EmulatedGantryMoveTask>
 {
 protected:
+    static constexpr float kDegreesPerRotation = 360;
+
     float target_position_deg = 0;
     float target_velocity_deg_per_sec = 0;
 public:

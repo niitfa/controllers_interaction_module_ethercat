@@ -14,9 +14,11 @@ void RealGantryMoveTask::SetVelocity(float velocity)
 
 void RealGantryMoveTask::StateRun()
 {
+    constexpr float kDegreesPerRotation = 360;
     auto drive_props = this->GetContext()->GetSubsystem()->GetProperties();
     auto drive = this->GetContext()->GetSubsystem()->GetDrive();
-    task.SetUnitsRatio(drive_props.gear_ratio / drive_props.microstep_resolution);
+    task.SetUnitsRatio(kDegreesPerRotation / drive_props.microstep_resolution / drive_props.gear_ratio);
+
     if(drive)
     {
         task.RunTask(this->GetContext());

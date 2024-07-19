@@ -3,13 +3,13 @@
 void RealKVDetectorDriveMoveTask::SetTargetPosition(float position)
 {
     task.SetTargetPosition(position);
-    this->target_position_deg = position;
+    this->target_position_mm = position;
 }
 
 void RealKVDetectorDriveMoveTask::SetVelocity(float velocity)
 {
     task.SetTargetVelocity(velocity);
-    this->target_velocity_deg_per_sec = velocity;
+    this->target_velocity_mm_per_sec = velocity;
 }
 
 void RealKVDetectorDriveMoveTask::StateRun()

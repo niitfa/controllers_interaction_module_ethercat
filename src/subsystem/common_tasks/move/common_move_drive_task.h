@@ -36,9 +36,9 @@ void CommonMoveDriveTask<TContext>::SetTargetVelocity(float velocity)
 }
 
 template<class TContext>
-void CommonMoveDriveTask<TContext>::SetTargetPosition(float velocity)
+void CommonMoveDriveTask<TContext>::SetTargetPosition(float position)
 {
-    this->target_velocity_user_units = velocity;
+    this->target_position_user_units = position;
 }
 
 template<class TContext>
@@ -59,12 +59,16 @@ void CommonMoveDriveTask<TContext>::RunTask(TContext* context)
     int32_t target_position_c = (int32_t)(this->target_position_user_units  / this->units_per_count_ratio);
     int32_t target_velocity_c = (int32_t)(this->target_velocity_user_units  / this->units_per_count_ratio);
 
+	//std::cout << "CommonMoveDriveTask::RunTask(): pos_v: " << this->target_position_user_units << std::endl;
+	//std::cout << "CommonMoveDriveTask::RunTask(): pos_c: " << target_position_c << std::endl;
+
     switch(this->task_state)
 	{
 		case 0:
 		drive->GetRxPDOEntry(coe_object_names::kModeOfOperation)->StoreValue(coe_drive_state_handler::ModeOfOperation::kModeProfilePosition);
 		drive->GetRxPDOEntry(coe_object_names::kTargetPosition)->StoreValue(target_position_c);
         drive->GetRxPDOEntry(coe_object_names::kProfileVelocity)->StoreValue(target_velocity_c);
+		
 
 		WordBit::Write(&controlword, 8, 0);
 		WordBit::Write(&controlword, 6, 0);		
@@ -80,6 +84,8 @@ void CommonMoveDriveTask<TContext>::RunTask(TContext* context)
 		WordBit::Write(&controlword, 4, 1);
 		break;
 	}
+
+	//std::cout << "CommonMoveDriveTask<TContext>::RunTask(TContext* context): POS: " << actual_position_c << "\n";
 
 	if (actual_position_c == target_position_c)
 	{

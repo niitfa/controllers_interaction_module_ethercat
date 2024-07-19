@@ -50,7 +50,7 @@ namespace coe_drive_state_handler
 		}
 	}
 
-	PowerDriveSystemState GetPDSStateFromStatusword(const int64_t* const statusword)
+	PowerDriveSystemState GetPDSStateFromStatusword(int64_t* const statusword)
 	{
 		const uint8_t kNumberOfBits = 7;
 		uint8_t bits[kNumberOfBits];

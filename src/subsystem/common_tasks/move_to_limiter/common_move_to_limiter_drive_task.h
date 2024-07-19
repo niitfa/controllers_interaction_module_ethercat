@@ -26,7 +26,7 @@ CommonMoveToLimiterDriveTask<TContext>::CommonMoveToLimiterDriveTask()
 template<class TContext>
 void CommonMoveToLimiterDriveTask<TContext>::RunTask(TContext* context)
 {
-    EthercatSlave* drive = context->GetSubsystem()->GetDrive();
+    /* EthercatSlave* drive = context->GetSubsystem()->GetDrive();
     uint32_t frequency = context->GetSubsystem()->GetEthercatConfig()->GetTimer()->GetFrequency();
     int32_t actual_velocity_drive_c = drive->GetTxPDOEntry(coe_object_names::kActualVelocity)->LoadValue();
     float actual_velocity_drive_mm = actual_velocity_drive_c * units_per_count_ratio;
@@ -35,7 +35,6 @@ void CommonMoveToLimiterDriveTask<TContext>::RunTask(TContext* context)
     int8_t mode_of_operation_out = drive->GetTxPDOEntry(coe_object_names::kModeOfOperationOut)->LoadValue();
     switch (task_state)
     {
-        /* Enabling PV mode */
         case 0: 
         drive->GetRxPDOEntry(coe_object_names::kProfileVelocity)->StoreValue(target_velocity_c);
         drive->GetRxPDOEntry(coe_object_names::kModeOfOperation)->StoreValue(coe_drive_state_handler::ModeOfOperation::kModeProfileVelocity);
@@ -60,6 +59,7 @@ void CommonMoveToLimiterDriveTask<TContext>::RunTask(TContext* context)
         }
         break;
     }
+    */
 }
 
 template<class TContext>

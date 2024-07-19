@@ -11,7 +11,10 @@ class GantryEnableTask : public GantryTaskState,
 
 class EmulatedGantryEnableTask : public GantryEnableTask
 {
+	const int kEnablingDelayCycles = 50;
+	int delay_counter = 0;
 public:
+	EmulatedGantryEnableTask();
 	void StateRun() override;
 };
 

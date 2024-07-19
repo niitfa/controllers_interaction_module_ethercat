@@ -35,7 +35,6 @@ EthercatSlave* IOModuleMKLKTBuilder::Build(uint16_t alias, uint16_t position)
     txpdo_ct_5122->AddEntry(kCT5122_CH1_Counter_Val, 0x6000, 0x0D, 32);
     txpdo_ct_5122->AddEntry(kCT5122_CH1_Capture_Val, 0x6000, 0x0E, 32);
 
-
     PDOEntriesList* rxpdo_ct_5122 = new PDOEntriesList();
     rxpdo_ct_5122->AddEntry(kCT5122_CH0_Output_Control, 0x7000, 0x01, 1);
     rxpdo_ct_5122->AddEntry(kCT5122_CH1_Output_Control, 0x7000, 0x03, 1);

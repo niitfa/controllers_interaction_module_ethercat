@@ -9,6 +9,7 @@ void MailboxWritingState::StateRun()
         {
             if(it->second->WriteTypeRequest())
             {
+                //std::cout << "MailboxWritingState::StateRun(): " << it->second->GetName() << " written value " << it->second->LoadValue() << std::endl;
                 ++it;
             }
             return;
