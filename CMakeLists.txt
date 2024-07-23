@@ -31,13 +31,9 @@ file(GLOB_RECURSE headers ${source_dir}/*${header_ext})
 
 # Remove old headers from include/ dir
 file(GLOB headers_copy ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
-#message(${headers_copy})
-
 foreach(_header_copy ${headers_copy})
     get_filename_component(_header_filename ${_header_copy} NAME)
     file(REMOVE include/${_header_filename})
-
-   message(deleted " " ${_header_filename})
 endforeach()
 
 
@@ -54,7 +50,7 @@ foreach(_header ${headers})
     target_include_directories(${exec_target} PRIVATE ${_include_dir})
     target_include_directories(${lib_target} PRIVATE ${_include_dir}) 
     
-    # Copy header to other directory
+    # Copy header to include/ directory
     file(REMOVE ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
     file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
     file(COPY ${_header} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/include/)
