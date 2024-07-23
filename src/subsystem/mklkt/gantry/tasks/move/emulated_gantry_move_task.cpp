@@ -39,5 +39,4 @@ void EmulatedGantryMoveTask::StateRun()
     {
         GantryTaskState::GetContext()->TransitToNext();
     }
-
 }

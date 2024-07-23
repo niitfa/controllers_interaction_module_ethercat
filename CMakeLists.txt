@@ -29,6 +29,18 @@ set(igh_objects
 file(GLOB_RECURSE sources ${source_dir}/*${source_ext})
 file(GLOB_RECURSE headers ${source_dir}/*${header_ext})
 
+# Remove old headers from include/ dir
+file(GLOB headers_copy ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+#message(${headers_copy})
+
+foreach(_header_copy ${headers_copy})
+    get_filename_component(_header_filename ${_header_copy} NAME)
+    file(REMOVE include/${_header_filename})
+
+   message(deleted " " ${_header_filename})
+endforeach()
+
+
 add_library(${lib_target} STATIC ${sources})
 target_link_libraries(${lib_target} ${igh_objects}) 
 
@@ -41,4 +53,9 @@ foreach(_header ${headers})
     get_filename_component(_include_dir ${_header} DIRECTORY)
     target_include_directories(${exec_target} PRIVATE ${_include_dir})
     target_include_directories(${lib_target} PRIVATE ${_include_dir}) 
+    
+    # Copy header to other directory
+    file(REMOVE ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+    file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+    file(COPY ${_header} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 endforeach()
