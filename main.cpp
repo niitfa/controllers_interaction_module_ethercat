@@ -19,7 +19,7 @@ int main(int argc,char** argv)
 {
 	MKLKTNetwork* network = new MKLKTNetwork();
 
-	network->SetGantryEmulationStatus(true);
+	//network->SetGantryEmulationStatus(true);
 	network->SetKVDetectorDriveEmulatonStatus(true);
 	network->SetKVFilterDriveEmulatonStatus(true);
 	
@@ -34,11 +34,11 @@ int main(int argc,char** argv)
 		/* Цепочка заданий для гантри */
 		auto gantry_enable_task = GantryEnableTask::CreateTaskFor(gantry);
 		auto gantry_move_task = GantryMoveTask::CreateTaskFor(gantry);
-		gantry_move_task->SetTargetPosition(360);
-		gantry_move_task->SetVelocity(60);
+		gantry_move_task->SetTargetPosition(5);
+		gantry_move_task->SetVelocity(1);
 		auto gantry_move_task_2 = GantryMoveTask::CreateTaskFor(gantry);
-		gantry_move_task_2->SetTargetPosition(100);
-		gantry_move_task_2->SetVelocity(30);
+		gantry_move_task_2->SetTargetPosition(0);
+		gantry_move_task_2->SetVelocity(0.5);
 		gantry_enable_task->WithNextTask(gantry_move_task)->WithNextTask(gantry_move_task_2);
 		gantry->SetTask(gantry_enable_task);
 
@@ -77,13 +77,13 @@ int main(int argc,char** argv)
 				<< std::endl; */
 
 			/* Gantry move test */
-			/*std::cout << "Gantry: "
+			std::cout << "Gantry: "
 				<< "\tenabled: " << network->GetDevice()->GetGantry()->GetTelemetry()->is_drive_enabled
 				<< "\tpos_deg: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_position_deg
 				<< "\tpos_count: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_position_pulse
 				<< "\tvel_deg_per_sec: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_velocity_deg_per_sec
 				<< "\tvel_count_per_sec: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_velocity_pulse_per_sec
-				<< "\n"; */
+				<< "\n";
 
 			/* kV detector move test */
 			/* std::cout << "kV det: "
@@ -95,15 +95,15 @@ int main(int argc,char** argv)
 				<< "\n"; */
 
 			/* kV filter move test */
-			std::cout << "kV filt: "
+			/* std::cout << "kV filt: "
 				<< "\tenabled: " << network->GetDevice()->GetKVFilterDrive()->GetTelemetry()->is_drive_enabled
 				<< "\tpos_mm: " <<  network->GetDevice()->GetKVFilterDrive()->GetTelemetry()->drive_position_mm
 				<< "\tpos_count: " <<  network->GetDevice()->GetKVFilterDrive()->GetTelemetry()->drive_position_pulse
 				<< "\tvel_mm_per_sec: " <<  network->GetDevice()->GetKVFilterDrive()->GetTelemetry()->drive_velocity_mm_per_sec
 				<< "\tvel_count_per_sec: " <<  network->GetDevice()->GetKVFilterDrive()->GetTelemetry()->drive_velocity_pulse_per_sec
-				<< "\n";
+				<< "\n"; */
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		}
 
 	return 0;

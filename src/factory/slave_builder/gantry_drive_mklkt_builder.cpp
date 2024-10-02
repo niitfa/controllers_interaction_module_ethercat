@@ -9,8 +9,8 @@ using namespace coe_object_names;
 
 EthercatSlave* GantryDriveMKLKTBuilder::Build(uint16_t alias, uint16_t position)
 {
-    //int drive_counts_per_round = 8388608; // 23-разрядный двигатель
-    int drive_counts_per_round = 10000;
+    int drive_counts_per_round = 65536; // 23-разрядный двигатель
+    //int drive_counts_per_round = 10000;
     EthercatSlave* ecat_drive = new EthercatSlave();
 
     /* Уточнить список после получение инф. о модели драйвера*/

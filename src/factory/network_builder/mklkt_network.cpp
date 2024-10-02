@@ -36,10 +36,10 @@ void MKLKTNetwork::Build(uint16_t master_index)
     EthercatSlave* kv_detector_slave = (new KVDetectorDriveMKLKTBuilder)->Build(0, 3);
 
     EthercatSlavesContainer* ethercat_slaves = new EthercatSlavesContainer();
-    ethercat_slaves->RegisterSlave(io_module_slave);
+    //ethercat_slaves->RegisterSlave(io_module_slave);
     ethercat_slaves->RegisterSlave(gantry_slave);
-    ethercat_slaves->RegisterSlave(kv_filter_slave);
-    ethercat_slaves->RegisterSlave(kv_detector_slave);
+    //ethercat_slaves->RegisterSlave(kv_filter_slave);
+    //ethercat_slaves->RegisterSlave(kv_detector_slave);
 
     EthercatTimer* timer = new SimpleTimer();
     timer->SetFrequency(frequency_hz);
@@ -53,11 +53,11 @@ void MKLKTNetwork::Build(uint16_t master_index)
     Gantry* gantry;
     if(is_gantry_emulated)
     {
-        gantry = new EmulatedGantry(10000, 30);
+        gantry = new EmulatedGantry(65536, 585./23);
     }
     else
     {
-        gantry = new RealGantry(10000, 30);
+        gantry = new RealGantry(65536, 585./23);
         gantry->RegisterDrive(gantry_slave);
     }
 
