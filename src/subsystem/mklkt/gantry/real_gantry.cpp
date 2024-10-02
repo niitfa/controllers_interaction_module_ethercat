@@ -25,9 +25,9 @@ void RealGantry::ModifyTelemetry()
 	telemetry->is_drive_enabled = (telemetry->pds_drive_state == coe_drive_state_handler::kStateOperationEnabled);
 	telemetry->drive_position_pulse = this->drive->GetTxPDOEntry(kActualPosition)->LoadValue();
     telemetry->drive_velocity_pulse_per_sec = this->drive->GetTxPDOEntry(kActualVelocity)->LoadValue();
-    telemetry->drive_position_deg = this->drive->GetTxPDOEntry(kActualPosition)->LoadValue() 
-		/ props.microstep_resolution / props.gear_ratio * kDegreesPerRotation;
-    telemetry->drive_velocity_deg_per_sec = this->drive->GetTxPDOEntry(kActualVelocity)->LoadValue()
+    telemetry->drive_position_deg = (float)this->drive->GetTxPDOEntry(kActualPosition)->LoadValue()
+		 / props.microstep_resolution / props.gear_ratio * kDegreesPerRotation;
+    telemetry->drive_velocity_deg_per_sec = (float)this->drive->GetTxPDOEntry(kActualVelocity)->LoadValue()
 		/ props.microstep_resolution / props.gear_ratio * kDegreesPerRotation;
 
 }
