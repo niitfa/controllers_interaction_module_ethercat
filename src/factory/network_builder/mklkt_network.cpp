@@ -53,11 +53,11 @@ void MKLKTNetwork::Build(uint16_t master_index)
     Gantry* gantry;
     if(is_gantry_emulated)
     {
-        gantry = new EmulatedGantry(65536, 585./23);
+        gantry = new EmulatedGantry(65536, 1745730./65536);
     }
     else
     {
-        gantry = new RealGantry(65536, 585./23);
+        gantry = new RealGantry(65536, 1745730./65536);
         gantry->RegisterDrive(gantry_slave);
     }
 
