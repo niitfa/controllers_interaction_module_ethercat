@@ -13,7 +13,9 @@ set(exec_target run)
 set(lib_target ethercatcim)
 
 # IGH Ethercat libraries path
-set(igh_lib_path "/root/ethercat-stable-1.5/lib/")
+#set(igh_lib_path "/root/ethercat-stable-1.5/lib/") # стенд в тринити
+set(igh_lib_path "/home/user/igh/ethercat-hg/lib") # стенд в МЭИ
+#set(igh_lib_path "/home/artamonov/artamonov/ethercat-hg/lib") # artamonov
 set(igh_objects 
     ${igh_lib_path}/libethercat_la-common.o
     ${igh_lib_path}/libethercat_la-domain.o

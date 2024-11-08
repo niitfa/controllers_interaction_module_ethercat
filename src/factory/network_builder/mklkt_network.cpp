@@ -36,7 +36,7 @@ void MKLKTNetwork::Build(uint16_t master_index)
     EthercatSlave* kv_detector_slave = (new KVDetectorDriveMKLKTBuilder)->Build(0, 3);
 
     EthercatSlavesContainer* ethercat_slaves = new EthercatSlavesContainer();
-    //ethercat_slaves->RegisterSlave(io_module_slave);
+    ethercat_slaves->RegisterSlave(io_module_slave);
     ethercat_slaves->RegisterSlave(gantry_slave);
     //ethercat_slaves->RegisterSlave(kv_filter_slave);
     //ethercat_slaves->RegisterSlave(kv_detector_slave);

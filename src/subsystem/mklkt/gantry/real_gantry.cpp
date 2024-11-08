@@ -2,6 +2,7 @@
 #include "ethercat_slave_names.h"
 #include "coe_object_names.h"
 #include "coe_drive_state_handler.h"
+#include "word_bit.h"
 
 using namespace ethercat_slave_names;
 using namespace coe_object_names;
@@ -30,4 +31,19 @@ void RealGantry::ModifyTelemetry()
     telemetry->drive_velocity_deg_per_sec = (float)this->drive->GetTxPDOEntry(kActualVelocity)->LoadValue()
 		/ props.microstep_resolution / props.gear_ratio * kDegreesPerRotation;
 
+	// encoder
+    telemetry->drive_encoder_value_counts = this->GetEthercatConfig()->GetSlave(kIOModuleName)->GetTxPDOEntry(kCT5122_CH0_Counter_Val)->LoadValue();
+	float encoder_gear_ratio = this->GetProperties().gear_ratio;
+    telemetry->drive_encoder_value_deg = (float)telemetry->drive_encoder_value_counts / 4096. / encoder_gear_ratio;
+
+    // limit switches
+	int32_t digital_inputs = this->drive->GetTxPDOEntry(kDigitalInputs)->LoadValue();
+	int limit_switch_pos_homing_bit = 19;
+	telemetry->limit_switch_homing_positive = WordBit::Read((int64_t*)&digital_inputs, limit_switch_pos_homing_bit);
+	int limit_switch_neg_homing_bit = 18;
+    telemetry->limit_switch_homing_negative = WordBit::Read((int64_t*)&digital_inputs, limit_switch_neg_homing_bit);
+	int limit_switch_pos_user_bit = 17;
+    telemetry->limit_switch_user_positive = WordBit::Read((int64_t*)&digital_inputs, limit_switch_pos_user_bit);
+	int limit_switch_neg_user_bit = 16;
+    telemetry->limit_switch_user_negative = WordBit::Read((int64_t*)&digital_inputs, limit_switch_neg_user_bit);
 }

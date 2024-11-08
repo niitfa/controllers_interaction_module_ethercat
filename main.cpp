@@ -14,9 +14,43 @@
 #include "kv_filter_drive_move_task.h"
 #include "kv_filter_drive_stop_task.h"
 
+void test()
+{
+
+	MKLKTNetwork* network = new MKLKTNetwork();
+
+	//network->SetGantryEmulationStatus(true);
+	network->SetKVDetectorDriveEmulatonStatus(true);
+	network->SetKVFilterDriveEmulatonStatus(true);
+	
+	network->Build(0);
+	network->StartThread();
+
+	auto gantry = network->GetDevice()->GetGantry();
+	auto kv_detector = network->GetDevice()->GetKVDetectorDrive();
+	auto kv_filter = network->GetDevice()->GetKVFilterDrive();
+
+
+
+	while(1)
+	{
+		std::cout << "Gantry: "
+		<< "\tenc_cnt: " << network->GetDevice()->GetGantry()->GetTelemetry()->drive_encoder_value_counts
+		<< "\tenc_deg: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_encoder_value_deg
+		<< "\tlim_sw: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->limit_switch_homing_negative
+		//<< "\tvel_deg_per_sec: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_velocity_deg_per_sec
+		//<< "\tvel_count_per_sec: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_velocity_pulse_per_sec
+		<< "\n";
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	}
+}
+
 
 int main(int argc,char** argv)
 {
+	test();
+
 	MKLKTNetwork* network = new MKLKTNetwork();
 
 	//network->SetGantryEmulationStatus(true);

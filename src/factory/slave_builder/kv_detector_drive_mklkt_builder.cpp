@@ -27,6 +27,7 @@ EthercatSlave* KVDetectorDriveMKLKTBuilder::Build(uint16_t alias, uint16_t posit
     rxpdo->AddEntry(kTargetPosition, 0x607A, 0x00, 32); // 3
     rxpdo->AddEntry(kTargetVelocity, 0x60FF, 0x00, 32); // 4
     rxpdo->AddEntry(kProfileVelocity, 0x6081, 0x00, 32); // 5
+    rxpdo->AddEntry(kHomingMethod, 0x6098, 0x00, 8); // 6
 
     PDOEntriesList* txpdo = new PDOEntriesList();
     txpdo->AddEntry(kStatusword, 0x6041, 0x00, 16);

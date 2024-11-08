@@ -12,6 +12,12 @@ struct KVDetectorDriveTelemetry
     int32_t drive_velocity_pulse_per_sec = 0;
     float drive_position_mm = 0;
     float drive_velocity_mm_per_sec = 0; 
+
+    // limit switches
+    int limit_switch_homing_positive = 0;
+    int limit_switch_homing_negative = 0;
+    int limit_switch_user_positive = 0;
+    int limit_switch_user_negative = 0;
 };
 
 #endif

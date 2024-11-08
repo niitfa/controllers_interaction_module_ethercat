@@ -25,19 +25,19 @@ EthercatSlave* IOModuleMKLKTBuilder::Build(uint16_t alias, uint16_t position)
     txpdo_ct_5122->AddEntry(kCT5122_CH0_IDLE,       0x6000, 0x01, 1);
     txpdo_ct_5122->AddEntry(kCT5122_CH0_Data,       0x6000, 0x02, 1);
     txpdo_ct_5122->AddEntry(kCT5122_CH0_Enc_UP,     0x6000, 0x03, 1);
-    txpdo_ct_5122->AddEntry(kCT5122_CH0_Enc_DOWN,   0x6000, 0x04, 1);
+    txpdo_ct_5122->AddEntry(kCT5122_CH0_Enc_DOWN,   0x6000, 0x04, 13);
     txpdo_ct_5122->AddEntry(kCT5122_CH1_IDLE,       0x6000, 0x06, 1);
     txpdo_ct_5122->AddEntry(kCT5122_CH1_Data,       0x6000, 0x07, 1);
     txpdo_ct_5122->AddEntry(kCT5122_CH1_Enc_UP,     0x6000, 0x08, 1);
-    txpdo_ct_5122->AddEntry(kCT5122_CH1_Enc_DOWN,   0x6000, 0x09, 1);
+    txpdo_ct_5122->AddEntry(kCT5122_CH1_Enc_DOWN,   0x6000, 0x09, 13);
     txpdo_ct_5122->AddEntry(kCT5122_CH0_Counter_Val, 0x6000, 0x0B, 32);
     txpdo_ct_5122->AddEntry(kCT5122_CH0_Capture_Val, 0x6000, 0x0C, 32);
     txpdo_ct_5122->AddEntry(kCT5122_CH1_Counter_Val, 0x6000, 0x0D, 32);
     txpdo_ct_5122->AddEntry(kCT5122_CH1_Capture_Val, 0x6000, 0x0E, 32);
 
     PDOEntriesList* rxpdo_ct_5122 = new PDOEntriesList();
-    rxpdo_ct_5122->AddEntry(kCT5122_CH0_Output_Control, 0x7000, 0x01, 1);
-    rxpdo_ct_5122->AddEntry(kCT5122_CH1_Output_Control, 0x7000, 0x03, 1);
+    rxpdo_ct_5122->AddEntry(kCT5122_CH0_Output_Control, 0x7000, 0x01, 16);
+    rxpdo_ct_5122->AddEntry(kCT5122_CH1_Output_Control, 0x7000, 0x03, 16);
     
 
     PDOEntriesList* txpdo_ct_623f = new PDOEntriesList();
