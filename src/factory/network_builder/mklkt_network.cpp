@@ -30,8 +30,8 @@ void MKLKTNetwork::Build(uint16_t master_index)
     EthercatMaster* ethercat_master = new EthercatMaster();
 	ethercat_master->SetMasterIndex(master_index);
 
-    EthercatSlave* io_module_slave = (new IOModuleMKLKTBuilder)->Build(0, 1);
-    EthercatSlave* gantry_slave = (new GantryDriveMKLKTBuilder)->Build(0, 0);
+    EthercatSlave* io_module_slave = (new IOModuleMKLKTBuilder)->Build(0, 0);
+    EthercatSlave* gantry_slave = (new GantryDriveMKLKTBuilder)->Build(0, 1);
     EthercatSlave* kv_filter_slave = (new KVFilterDriveMKLKTBuilder)->Build(0, 2);
     EthercatSlave* kv_detector_slave = (new KVDetectorDriveMKLKTBuilder)->Build(0, 3);
 

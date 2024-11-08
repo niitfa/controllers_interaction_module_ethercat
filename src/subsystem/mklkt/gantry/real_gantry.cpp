@@ -34,7 +34,7 @@ void RealGantry::ModifyTelemetry()
 	// encoder
     telemetry->drive_encoder_value_counts = this->GetEthercatConfig()->GetSlave(kIOModuleName)->GetTxPDOEntry(kCT5122_CH0_Counter_Val)->LoadValue();
 	float encoder_gear_ratio = this->GetProperties().gear_ratio;
-    telemetry->drive_encoder_value_deg = (float)telemetry->drive_encoder_value_counts / 4096. / encoder_gear_ratio;
+    telemetry->drive_encoder_value_deg = (float)telemetry->drive_encoder_value_counts / 4096. / encoder_gear_ratio * kDegreesPerRotation;
 
     // limit switches
 	int32_t digital_inputs = this->drive->GetTxPDOEntry(kDigitalInputs)->LoadValue();

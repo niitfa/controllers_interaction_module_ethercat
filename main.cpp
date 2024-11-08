@@ -34,11 +34,15 @@ void test()
 
 	while(1)
 	{
+		network->GetDevice()->UpdateTelemetry();
 		std::cout << "Gantry: "
-		<< "\tenc_cnt: " << network->GetDevice()->GetGantry()->GetTelemetry()->drive_encoder_value_counts
-		<< "\tenc_deg: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_encoder_value_deg
-		<< "\tlim_sw: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->limit_switch_homing_negative
-		//<< "\tvel_deg_per_sec: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_velocity_deg_per_sec
+		<< " enc_cnt: " << gantry->GetTelemetry()->drive_encoder_value_deg
+		<< "\tenc_deg: " <<  gantry->GetTelemetry()->drive_encoder_value_deg
+		<< "\tlim_sw: " <<  gantry->GetTelemetry()->limit_switch_homing_negative
+		<< gantry->GetTelemetry()->limit_switch_homing_positive
+		<< gantry->GetTelemetry()->limit_switch_user_positive
+		<< gantry->GetTelemetry()->limit_switch_user_negative
+		<< "\tpos: " <<  gantry->GetTelemetry()->drive_position_deg
 		//<< "\tvel_count_per_sec: " <<  network->GetDevice()->GetGantry()->GetTelemetry()->drive_velocity_pulse_per_sec
 		<< "\n";
 

@@ -6,4 +6,4 @@ ODOT_CN_8033_ESI="esi/odot_cn_8033_esi.bin"
 ethercatsw start
 echo "ESI uploading" $ODOT_CN_8033_ESI "to slave" $ODOT_CN_8033_POSITION "..."
 ethercat sii_write -p $ODOT_CN_8033_POSITION $ODOT_CN_8033_ESI
-/etc/init.d/ethercat start
+/etc/init.d/ethercat restart
