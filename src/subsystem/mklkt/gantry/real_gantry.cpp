@@ -15,6 +15,20 @@ bool RealGantry::IsEmulated()
     return false;
 }
 
+//by MPEI
+int cnt = 0;
+double T = 0.2;
+double actVeloutPrev = 0; 
+double actVelout = 0;
+bool constSpeedDO_1 = false;
+bool impulsePosDO_2 = false;
+uint32_t DOs = 0;
+int64_t delta = 242;
+int impulsState = 0;
+int32_t posCNT = 0;
+int32_t posCNTPrev = 0;
+///////////////////////////
+
 void RealGantry::ModifyTelemetry()
 {
 	constexpr float kDegreesPerRotation = 360;
@@ -46,4 +60,43 @@ void RealGantry::ModifyTelemetry()
     telemetry->limit_switch_user_positive = WordBit::Read((int64_t*)&digital_inputs, limit_switch_pos_user_bit);
 	int limit_switch_neg_user_bit = 16;
     telemetry->limit_switch_user_negative = WordBit::Read((int64_t*)&digital_inputs, limit_switch_neg_user_bit);
+
+	//by MPEI
+	int64_t targetVel = context->GetSubsystem()->GetEthercatConfig()->GetSlave(kGantryDriveNameMKLKT)->GetRxPDOEntry(kProfileVelocity)->LoadValue();
+	int64_t currentVel = this->drive->GetTxPDOEntry(kActualVelocity)->LoadValue();
+	int64_t currentPos = this->drive->GetTxPDOEntry(kActualPosition)->LoadValue();	
+
+	actVeloutPrev = actVelout;
+	actVelout = (1.0 - 0.001 / T) * actVeloutPrev +  (0.001 / T) * currentVel;
+
+
+	if (targetVel != 0) {
+		if (targetVel-970 <= abs(actVelout) && targetVel+970 >= abs(actVelout)) {
+		// if (targetVel*0.5 <= abs(actVelout) && targetVel*1.5 >= abs(actVelout)) {	
+			if (cnt >= 10) {
+				constSpeedDO_1 = true;				
+			} else {
+				constSpeedDO_1 = false;				
+				cnt++;
+			}
+		} else {
+			cnt = 0;
+			constSpeedDO_1 = false; 			
+		}
+	} else {
+		constSpeedDO_1 = false; 		
+	}	
+
+	posCNTPrev = posCNT;
+	posCNT = 360.0 * 20 / 1745730 * currentPos;
+	if (posCNT != posCNTPrev) {
+		impulsePosDO_2 = true;
+	}
+	else {
+		impulsePosDO_2 = false;
+	}
+	
+	DOs = (constSpeedDO_1 << 16) + (impulsePosDO_2 << 17);
+	context->GetSubsystem()->GetEthercatConfig()->GetSlave(kGantryDriveNameMKLKT)->GetRxPDOEntry(kDigitalOutputs)->StoreValue(DOs);
+	///////////////////////////////////////////////	
 }

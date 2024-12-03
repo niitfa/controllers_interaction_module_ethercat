@@ -28,6 +28,9 @@ EthercatSlave* GantryDriveMKLKTBuilder::Build(uint16_t alias, uint16_t position)
     rxpdo->AddEntry(kTargetVelocity, 0x60FF, 0x00, 32); // 4
     rxpdo->AddEntry(kProfileVelocity, 0x6081, 0x00, 32); // 5
     rxpdo->AddEntry(kHomingMethod, 0x6098, 0x00, 8);
+    //by MPEI
+    rxpdo->AddEntry(kDigitalOutputs, 0x60FE, 0x01, 32);
+    //
 
     PDOEntriesList* txpdo = new PDOEntriesList();
     txpdo->AddEntry(kStatusword, 0x6041, 0x00, 16);
