@@ -22,7 +22,9 @@ namespace coe_object_names
 	const std::string kPeakCurrent = "Peak current";
 	const std::string kDigitalInputs = "Digital inputs";
 	const std::string kHomingMethod = "Digital inputs";
-
+	//by MPEI
+	const std::string kDigitalOutputs = "Digital outputs";
+	
     /* IO Module ODOT CT-3168 */
  	const std::string kCT3168_AI0 = "AI#0 CT-3168";
  	const std::string kCT3168_AI1 = "AI#1 CT-3168";
